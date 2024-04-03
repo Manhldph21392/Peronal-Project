@@ -1,0 +1,156 @@
+.wrap-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    background-color: rgb(248, 249, 250);
+    padding-bottom: 100px;
+}
+
+.box_icon img {
+    margin-top: 64px;
+    width: 100px;
+    height: 100px;
+}
+
+.headerLogin h2 {
+    font-size: 45px;
+    font-weight: 500;
+}
+
+.loginForm {
+    text-align: center;
+    display: flex;
+    box-shadow: rgba(236, 238, 240, 0.5) 0px 10px 5px;
+    background: rgb(255, 255, 255);
+    padding: 24px;
+    border-radius: 15px;
+    min-width: 300px;
+}
+
+.headerLogin {
+    text-align: center;
+}
+
+.loginForm form {
+    margin: auto
+}
+
+.box_icon h2 {
+    margin: 0;
+}
+
+
+
+
+
+
+.header_body {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.header_body_left img {
+    width: 50px;
+}
+
+.avt_name_popup {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.avt_popup button {
+    width: 100%;
+    margin: 15px 0px;
+}
+
+.avt_popup {
+    min-width: 300px;
+}
+
+
+
+/* table */
+.box_table {
+    margin: 30px 46px 0px;
+    overflow: auto;
+}
+
+.box_table .ant-table-cell {
+    min-width: 150px;
+}
+
+.box_table .ant-table-row {
+    background: #fff;
+}
+
+.box_table .ant-table-content {
+    overflow: auto;
+}
+
+.action_table {
+    text-align: right;
+    padding: 20px 10px;
+    background: #fff;
+    border-radius: 10px 10px 0 0;
+}
+
+.action_table button {
+    margin: 0 5px;
+}
+
+
+
+
+/* Add */
+.box_add form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-add-left {
+    width: 45%;
+}
+
+.form-add-right {
+    width: 45%;
+}
+
+.box_add {
+    margin: 30px 46px 0px;
+    background: #fff;
+    padding: 0 20px 30px;
+}
+
+.header-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 0.5px solid #000;
+}
+
+.header-form .title {
+    font-weight: 500;
+}
+
+.status_required {
+    font-weight: 500;
+}
+
+.status_required span {
+    color: red;
+}
+
+.form_contact_infomation {
+    border: 2px solid rgb(223, 227, 230);
+    padding: 20px 8px 8px;
+    border-radius: 6px
+}
+
+.box_add .ant-row {
+    justify-content: space-between;
+}
