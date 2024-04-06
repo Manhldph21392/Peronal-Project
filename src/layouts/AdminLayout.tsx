@@ -5,7 +5,16 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Layout, Menu, theme, Space, Avatar, Popover, Button } from "antd";
+import {
+  Layout,
+  Menu,
+  theme,
+  Space,
+  Avatar,
+  Popover,
+  Button,
+  Modal,
+} from "antd";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 
 import "../assets/css/login.css";
@@ -36,6 +45,7 @@ const items: MenuItem[] = [getItem("Employee", "1", <PieChartOutlined />)];
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [visible, setVisible] = useState(false); // State để xác định popup có hiển thị hay không
+  const [confirmVisible, setConfirmVisible] = useState(false); // State để xác định trạng thái của Modal confirm logout
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -46,7 +56,12 @@ const AdminLayout = () => {
 
   const [logout, { isLoading }] = useLogoutMutation();
   const navigate = useNavigate();
-  const onHandleLogout = async () => {
+
+  const showConfirmModal = () => {
+    setConfirmVisible(true);
+  };
+
+  const handleOk = async () => {
     try {
       await logout({}).unwrap();
       localStorage.removeItem("token");
@@ -54,6 +69,11 @@ const AdminLayout = () => {
     } catch (error) {
       console.error("Logout failed:", error);
     }
+    setConfirmVisible(false);
+  };
+
+  const handleCancel = () => {
+    setConfirmVisible(false);
   };
 
   return (
@@ -104,7 +124,7 @@ const AdminLayout = () => {
                       </div>
                       <Button
                         type="primary"
-                        onClick={onHandleLogout}
+                        onClick={showConfirmModal}
                         loading={isLoading}
                       >
                         Logout
@@ -130,6 +150,15 @@ const AdminLayout = () => {
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
         </Footer>
       </Layout>
+      {/* Modal confirm logout */}
+      <Modal
+        title="Confirm Logout"
+        visible={confirmVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>Are you sure you want to logout?</p>
+      </Modal>
     </Layout>
   );
 };

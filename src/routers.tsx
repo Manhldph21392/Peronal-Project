@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout";
 import LoginPage from "./models/pages/LoginPage";
 import ChangePasswordPage from "./models/pages/ChangePasswordPage";
@@ -7,6 +7,14 @@ import TableEmployee from "./models/components/TableEmployee";
 import ResetPassword from "./models/components/ResetPassword";
 import FormAddEmployee from "./models/components/FormAddEmployee";
 
+const PrivateRouter = ({ element }: { element: React.ReactNode }) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
+  return <>{element}</>;
+};
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -14,19 +22,15 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <div>HomePage</div>,
+        element: <Navigate to="/employee" />,
       },
       {
         path: "employee",
-        element: <TableEmployee />,
+        element: <PrivateRouter element={<TableEmployee />} />,
       },
       {
         path: "add-employee",
-        element: <FormAddEmployee />,
-      },
-      {
-        path: "reset-password",
-        element: <ResetPassword />,
+        element: <PrivateRouter element={<FormAddEmployee />} />,
       },
     ],
   },
@@ -39,7 +43,11 @@ export const router = createBrowserRouter([
     element: <ChangePasswordPage />,
   },
   {
-    path: "/auth/reset-password",
+    path: "/forgot-password",
     element: <ForgotPasswordPage />,
+  },
+  {
+    path: "/auth/reset-password",
+    element: <ResetPassword />,
   },
 ]);

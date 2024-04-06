@@ -4,6 +4,8 @@ import storage from "redux-persist/lib/storage";
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from "redux-persist";
 import authApi from "../api/auth";
 import employeeApi from "../api/employee";
+import { employeeSlice } from "../slices/employe";
+import EmployeeInfomation from "../models/components/EmployeeInfomation";
 
 const persistConfig = {
     key: "root",

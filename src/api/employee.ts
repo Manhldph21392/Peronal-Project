@@ -18,7 +18,7 @@ const employeeApi = createApi({
             query: () => ({
                 url: "employee",
                 method: "GET",
-            
+
 
             }),
             transformResponse: (response: { data: IEmployee[] }) => {
@@ -53,8 +53,74 @@ const employeeApi = createApi({
             transformResponse: (response: { data: IEmployee[] }) => {
                 return response.data
             },
+        }),
+        //department
+        getDepartments: builder.query({
+            query: () => ({
+                url: "department",
+                method: "GET"
+            }),
+            transformResponse: (response: { data: IEmployee[] }) => {
+                return response.data
+            },
         })
+        ,
+        //position
+        getPosition: builder.query({
+            query: () => ({
+                url: "position",
+                method: "GET"
+            }),
+            transformResponse: (response: { data: IEmployee[] }) => {
+                return response.data
+            },
+
+        }),
+        //gender
+        getGender: builder.query({
+            query: () => ({
+                url: "gender",
+                method: "GET"
+            }),
+            transformResponse: (response: { data: IEmployee[] }) => {
+                return response.data
+            },
+        }),
+        //benefit
+        getBenefit: builder.query({
+            query: () => ({
+                url: "benefit",
+                method: "GET"
+            }),
+            transformResponse: (response: { data: IEmployee[] }) => {
+                return response.data
+            },
+        }),
+        addBenefit: builder.mutation({
+            query: (benefit) => ({
+                url: "benefit",
+                method: "POST",
+                body: benefit
+            }),
+            transformResponse: (response: { data: IEmployee[] }) => {
+                return response.data
+            },
+        }),
+        deleteBenefit: builder.mutation({
+            query: (id) => ({
+                url: `benefit/${id}`,
+                method: "DELETE",
+            }),
+            transformResponse: (response: { data: IEmployee[] }) => {
+                return response.data
+            },
+        })
+
+
     })
 })
-export const { useGetEmployeesQuery, useGetEmployeeByIdQuery, useCreateEmployeeMutation, useUpdateEmployeeMutation } = employeeApi
+export const { useGetEmployeesQuery, useGetEmployeeByIdQuery,
+    useCreateEmployeeMutation, useUpdateEmployeeMutation, useGetDepartmentsQuery,
+    useGetPositionQuery, useGetGenderQuery, useGetBenefitQuery, useAddBenefitMutation,
+    useDeleteBenefitMutation } = employeeApi
 export default employeeApi

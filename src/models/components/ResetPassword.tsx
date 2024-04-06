@@ -1,77 +1,45 @@
-import React from "react";
-import {
-  Button,
-  Select,
-  Form,
-  type FormProps,
-  Input,
-  FormItemProps,
-  message,
-} from "antd";
+import React, { useState } from "react";
+import { Button, Form, Input, message } from "antd";
 import { useResetPasswordMutation } from "../../api/auth";
-
-const MyFormItemContext = React.createContext<(string | number)[]>([]);
-
-interface MyFormItemGroupProps {
-  prefix: string | number | (string | number)[];
-  children: React.ReactNode;
-}
+import { useParams, useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
   const [form] = Form.useForm();
-  const [resetPassword, isLoading] = useResetPasswordMutation();
-  const token = localStorage.getItem("token");
+  const [isLoading, setIsLoading] = useState(false);
+  const { token, email, company_id } = useParams();
+  const navigate = useNavigate();
+
+  const [resetPassword] = useResetPasswordMutation();
+
   const onFinish = async (values: any) => {
-    const data: any = await resetPassword({ values, token });
-    if (data?.data) {
-      message.success("Change password successfully");
-      localStorage.setItem("token", data.token);
-      console.log(data.token);
-    } else {
-      message.error("Change password failed");
+    try {
+      setIsLoading(true);
+      const { password } = values;
+      await resetPassword({ password, token, email, company_id });
+      message.success("Đặt lại mật khẩu thành công!");
+      logoutAndRedirect();
+    } catch (error) {
+      console.error("Lỗi khi đặt lại mật khẩu:", error);
+      message.error("Đã xảy ra lỗi khi đặt lại mật khẩu!");
+      setIsLoading(false);
     }
   };
-  function toArr(
-    str: string | number | (string | number)[]
-  ): (string | number)[] {
-    return Array.isArray(str) ? str : [str];
-  }
-  const MyFormItemGroup = ({ prefix, children }: MyFormItemGroupProps) => {
-    const prefixPath = React.useContext(MyFormItemContext);
-    const concatPath = React.useMemo(
-      () => [...prefixPath, ...toArr(prefix)],
-      [prefixPath, prefix]
-    );
 
-    return (
-      <MyFormItemContext.Provider value={concatPath}>
-        {children}
-      </MyFormItemContext.Provider>
-    );
+  const onFinishFailed = (errorInfo: any) => {
+    console.error("Validation failed:", errorInfo);
   };
 
-  const MyFormItem = ({ name, ...props }: FormItemProps) => {
-    const prefixPath = React.useContext(MyFormItemContext);
-    const concatName =
-      name !== undefined ? [...prefixPath, ...toArr(name)] : undefined;
+  const logoutAndRedirect = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
 
-    return <Form.Item name={concatName} {...props} />;
-  };
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
+    navigate("/login");
   };
 
-  const onSearch = (value: string) => {
-    console.log("search:", value);
-  };
-  const filterOption = (
-    input: string,
-    option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   return (
     <div className="wrap-login">
       <div className="headerLogin">
-        <h2>ResetPassword Password</h2>
+        <h2>Reset Password</h2>
       </div>
       <div className="loginForm">
         <Form
@@ -79,6 +47,7 @@ const ResetPassword = () => {
           name="reset_password_form"
           layout="vertical"
           onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
         >
           <Form.Item
             label="New Password"
@@ -92,12 +61,12 @@ const ResetPassword = () => {
           <Form.Item
             label="Confirm Password"
             name="confirmPassword"
-            dependencies={["confirmPassword"]}
+            dependencies={["password"]}
             rules={[
               { required: true, message: "Please confirm your new password!" },
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!value || getFieldValue("confirmPassword") === value) {
+                  if (!value || getFieldValue("password") === value) {
                     return Promise.resolve();
                   }
                   return Promise.reject(
@@ -112,7 +81,7 @@ const ResetPassword = () => {
             <Input.Password />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" {...isLoading}>
+            <Button type="primary" htmlType="submit" loading={isLoading}>
               Confirm
             </Button>
           </Form.Item>

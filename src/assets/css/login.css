@@ -1,3 +1,7 @@
+li {
+    list-style-type: none;
+}
+
 .wrap-login {
     display: flex;
     justify-content: center;
@@ -106,7 +110,7 @@
 
 
 /* Add */
-.box_add form {
+.box_content_add {
     display: flex;
     justify-content: space-between;
 }
@@ -153,4 +157,93 @@
 
 .box_add .ant-row {
     justify-content: space-between;
+}
+
+.short_line {
+    width: 40%;
+}
+
+.contract {
+    width: 45%;
+}
+
+.long_line {
+    display: flex;
+    justify-content: space-between;
+}
+
+.box_tabs .ant-tabs-nav {
+    padding: 25px 0 10px 55px;
+}
+
+.table_contract_content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content_left {
+    width: 50%;
+}
+
+.content_right {
+    width: 50%;
+}
+
+.group_button {
+    display: flex;
+}
+
+.content_employment {
+    max-width: 560px;
+}
+
+.content_other {
+    max-width: 560px;
+}
+
+.list_benefit ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.list_benefit ul {
+    padding: 0;
+}
+
+.list_benefit button {
+    height: 40px;
+    border: 1px dashed;
+}
+
+.benefit_item {
+    width: 85%;
+    background: rgb(241, 243, 245);
+    padding: 10px 20px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.actions_benefit {
+    width: 10%;
+}
+
+.list_benefit {
+    padding: 0;
+}
+
+.actions_benefit button {
+    height: 40px;
+}
+
+.title_page {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title_page h2 {
+    padding-left: 40px;
+    font-size: 36px;
+    margin: 0;
 }
