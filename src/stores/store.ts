@@ -5,6 +5,7 @@ import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, pers
 import authApi from "../api/auth";
 import employeeApi from "../api/employee";
 import { employeeSlice } from "../slices/employe";
+import { useDispatch, useSelector } from "react-redux";
 
 const persistConfig = {
     key: "root",
@@ -33,6 +34,9 @@ const store = configureStore({
             },
         }).concat(middleware),
 });
-
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 const persistor = persistStore(store);
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
+export const useAppSelector = useSelector.withTypes<RootState>()
 export { store, persistor };

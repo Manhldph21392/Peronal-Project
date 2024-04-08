@@ -7,7 +7,7 @@ interface IEmployeeInfomation {
     phone: string,
     birthday: string,
     address1: string,
-    gender: string ,
+    gender: string,
     id: string,
     motherName: string,
     dateofBirth: string,
@@ -39,10 +39,15 @@ interface IEmploymentDetails {
 }
 interface ISalaryWages {
     salary: string,
-    benefits: [],
+    basic_audit: number,
+    satefy_insurance: number,
+    health_insurance: number,
+    meal_allowance: number,
 }
 interface IOther {
-    [key: string]: any,
+    grade: number,
+    remark: string,
+    benefits: [],
 }
 
 interface IInitialState {
@@ -78,7 +83,7 @@ export const initialState: IInitialState = {
         safetyInsurance: "",
         healthInsurance: "",
         backgroundEducation: "",
-        
+
     },
     contractInfomation: {
         position: "",
@@ -93,9 +98,16 @@ export const initialState: IInitialState = {
     },
     salaryWages: {
         salary: "",
+        basic_audit: 0,
+        satefy_insurance: 0,
+        health_insurance: 0,
+        meal_allowance: 0,
+    },
+    other: {
+        grade: 0,
+        remark: "",
         benefits: [],
     },
-    other: {},
 }
 export const employeeSlice = createSlice({
     name: "employee",

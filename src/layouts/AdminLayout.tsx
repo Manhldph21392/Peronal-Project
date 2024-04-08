@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import {
-  DesktopOutlined,
-  PieChartOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
+import { AiOutlineUser } from "react-icons/ai";
 import type { MenuProps } from "antd";
 import {
   Layout,
@@ -80,78 +77,81 @@ const AdminLayout = () => {
 
   return (
     <Layout style={{ minHeight: "100vh", width: "100%" }}>
+    
       <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-      >
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          items={items}
-        />
-      </Sider>
+          collapsible
+          collapsed={collapsed}
+          onCollapse={(value) => setCollapsed(value)}
+          theme="light"
+        >
+          <div className="demo-logo-vertical" />
+          <Menu
+            theme="light"
+            defaultSelectedKeys={["1"]}
+            mode="inline"
+            items={items}
+          />
+        </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
-          <div className="header_body">
-            <div className="header_body_left">
-              <img
-                src="https://s3-alpha-sig.figma.com/img/6650/a3f3/139caf936060b11ca513200f3bf1d056?Expires=1713139200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bkxLzFoN1isH6SJPMAsaFFLsruLuz7-0WdODcG4rLeCZWmMvE7BGUu0gX0frja~HCU5quo-WOc9khgPId3eDpARLQ8HnJM1QF39Ay7B~qK~XZgpKUrd3NjaDdpflcFKabRKr-wvqFY0jO0ltHn~u1uUjSFsw~jDzDqre0SDnykr9EWzX2FWlgbX41FbfEGtZf51PGwHUyLyOhph3MVveKagIUO~LnKWQW98jOOfs3KUeHgQwkpovz9XFp9edeWIxl~87~v2DxCu6EzBhPvI0anyfXmSfd9DD4Zns4Z4UXcxCr6AO8T8QI9jAyXeVSCXS9gLFguHfQBbijahTxWqX0A__"
-                alt=""
-              />
-            </div>
-            <div className="header_body_right">
-              <Space>
-                <Popover
-                  visible={visible} // Trạng thái hiển thị của popup
-                  onVisibleChange={setVisible} // Hàm để thay đổi trạng thái hiển thị của popup
-                  content={
-                    <div className="avt_popup">
-                      <div className="avt_name_popup">
-                        <Avatar
-                          size={{
-                            xs: 24,
-                            sm: 32,
-                            md: 30,
-                            lg: 40,
-                            xl: 50,
-                            xxl: 100,
-                          }}
-                          icon={<UserOutlined />}
-                          onClick={handleAvatarClick}
-                        />
-                        <h4> LDM</h4>
-                      </div>
-                      <Button
-                        type="primary"
-                        onClick={showConfirmModal}
-                        loading={isLoading}
-                      >
-                        Logout
-                      </Button>
-                      <Link to="/reset-password">Reset Password</Link>
-                    </div>
-                  }
-                  trigger="click"
-                >
-                  <Avatar
-                    style={{ cursor: "pointer" }}
-                    size={{ xs: 24, sm: 32, md: 30, lg: 40, xl: 50, xxl: 100 }}
-                    icon={<UserOutlined />}
-                    onClick={handleAvatarClick}
-                  />
-                </Popover>
-              </Space>
-            </div>
+      <Header style={{ padding: 0, background: colorBgContainer }}>
+        <div className="header_body">
+          <div className="header_body_left">
+            <img
+              src="https://s3-alpha-sig.figma.com/img/6650/a3f3/139caf936060b11ca513200f3bf1d056?Expires=1713139200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bkxLzFoN1isH6SJPMAsaFFLsruLuz7-0WdODcG4rLeCZWmMvE7BGUu0gX0frja~HCU5quo-WOc9khgPId3eDpARLQ8HnJM1QF39Ay7B~qK~XZgpKUrd3NjaDdpflcFKabRKr-wvqFY0jO0ltHn~u1uUjSFsw~jDzDqre0SDnykr9EWzX2FWlgbX41FbfEGtZf51PGwHUyLyOhph3MVveKagIUO~LnKWQW98jOOfs3KUeHgQwkpovz9XFp9edeWIxl~87~v2DxCu6EzBhPvI0anyfXmSfd9DD4Zns4Z4UXcxCr6AO8T8QI9jAyXeVSCXS9gLFguHfQBbijahTxWqX0A__"
+              alt=""
+            />
           </div>
-        </Header>
+          <div className="header_body_right">
+            <Space>
+              <Popover
+                visible={visible} 
+                onVisibleChange={setVisible} 
+                content={
+                  <div className="avt_popup">
+                    <div className="avt_name_popup">
+                      <Avatar
+                        size={{
+                          xs: 24,
+                          sm: 32,
+                          md: 30,
+                          lg: 40,
+                          xl: 50,
+                          xxl: 100,
+                        }}
+                        icon={<UserOutlined />}
+                        onClick={handleAvatarClick}
+                      />
+                      <h4> LDM </h4>
+                    </div>
+                    <Button
+                      type="primary"
+                      onClick={showConfirmModal}
+                      loading={isLoading}
+                    >
+                      Logout
+                    </Button>
+                    <Link to="/change-password">Reset Password</Link>
+                  </div>
+                }
+                trigger="click"
+              >
+                <Avatar
+                  style={{ cursor: "pointer" }}
+                  size={{ xs: 24, sm: 32, md: 30, lg: 40, xl: 50, xxl: 100 }}
+                  icon={<UserOutlined />}
+                  onClick={handleAvatarClick}
+                />
+              </Popover>
+            </Space>
+          </div>
+        </div>
+      </Header>
         <Outlet />
         <Footer style={{ textAlign: "center" }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
+        Ant Design ©{new Date().getFullYear()} Created by Ant UED
+      </Footer>
       </Layout>
+  
       {/* Modal confirm logout */}
       <Modal
         title="Confirm Logout"

@@ -37,16 +37,17 @@ export const router = createBrowserRouter([
         path: "table-employee",
         element: <PrivateRouter element={<TableNew />} />,
       },
+      {
+        path: "change-password",
+        element: <PrivateRouter element={<ChangePasswordPage />} />,
+      },
     ],
   },
   {
     path: "/login",
     element: <LoginPage />,
   },
-  {
-    path: "change-password",
-    element: <ChangePasswordPage />,
-  },
+
   {
     path: "/forgot-password",
     element: <ForgotPasswordPage />,

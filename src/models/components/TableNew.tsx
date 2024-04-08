@@ -3,14 +3,17 @@ import { Table, Button, Checkbox, message, Modal } from "antd";
 import moment from "moment";
 import { FileAddOutlined, DeleteOutlined } from "@ant-design/icons";
 import { IEmployee } from "../../interfaces/Employee";
-import { useGetEmployeesQuery, useDeleteEmployeeMutation } from "../../api/employee";
+import {
+  useGetEmployeesQuery,
+  useDeleteEmployeeMutation,
+} from "../../api/employee";
 import { Link } from "react-router-dom";
 
 const TableNew = () => {
   const { data: employees = [], refetch } = useGetEmployeesQuery({});
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
   const [deleteEmployee] = useDeleteEmployeeMutation();
-  const [confirmVisible, setConfirmVisible] = useState(false); 
+  const [confirmVisible, setConfirmVisible] = useState(false);
 
   const onSelectChange = (selectedRowKeys) => {
     setSelectedRowKeys(selectedRowKeys);
@@ -108,6 +111,11 @@ const TableNew = () => {
 
   return (
     <div className="box_table">
+      <div className="header_table">
+        <div className="title">
+          <h3>Employee Management</h3>
+        </div>
+      </div>
       <div className="action_table">
         <Button type="primary">
           <FileAddOutlined />
@@ -123,7 +131,6 @@ const TableNew = () => {
           Delete
         </Button>
       </div>
-      <div style={{ marginBottom: 16 }}></div>
       <Table
         dataSource={dataSource}
         columns={columns}

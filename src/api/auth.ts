@@ -43,6 +43,13 @@ export const authApi = createApi({
                 body: user
             }),
         }),
+        changePassword: builder.mutation({
+            query: (user) => ({
+                url: `change-password`,
+                method: 'POST',
+                body: user
+            }),
+        }),
         getCompanys: builder.query({
             query: () => ({
                 url: `company`,
@@ -51,5 +58,5 @@ export const authApi = createApi({
         })
     }),
 })
-export const { useLoginMutation, useGetCompanysQuery, useLogoutMutation, useResetPasswordMutation, useForgotPasswordMutation } = authApi
+export const { useLoginMutation, useGetCompanysQuery, useLogoutMutation, useResetPasswordMutation, useForgotPasswordMutation , useChangePasswordMutation} = authApi
 export default authApi

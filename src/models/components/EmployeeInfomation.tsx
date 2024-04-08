@@ -4,10 +4,13 @@ import { updateEmployeeInfomation } from "../../slices/employe";
 import { Form } from "antd";
 import React from "react";
 import { RootState } from "../../stores/employeManager";
+import { useAppSelector } from "../../stores/store";
 const EmployeeInfomation = () => {
-  const { employeeInfomation } = useSelector(
-    (state: RootState) => state.employee
+  const  state = useAppSelector(
+    (state) => state.employee
   );
+  console.log(state);
+  
   
   const dispatch = useDispatch();
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {

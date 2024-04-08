@@ -1,94 +1,61 @@
 import React from "react";
-import {
-  Button,
-  Select,
-  Form,
-  type FormProps,
-  Input,
-  FormItemProps,
-} from "antd";
-import { Link } from "react-router-dom";
-
-const MyFormItemContext = React.createContext<(string | number)[]>([]);
-
-interface MyFormItemGroupProps {
-  prefix: string | number | (string | number)[];
-  children: React.ReactNode;
-}
-type FieldType = {
-  newPassword?: string;
-  confirmPassword?: string;
-};
+import { Button, Form, Input, message } from "antd";
+import { useChangePasswordMutation } from "../../api/auth";
+import { IUser } from "../../interfaces/User";
 
 const ChangePassword = () => {
-  const onFinish: FormProps<[]>["onFinish"] = (values) => {
-    console.log("Success:", values);
-  };
-  function toArr(
-    str: string | number | (string | number)[]
-  ): (string | number)[] {
-    return Array.isArray(str) ? str : [str];
-  }
-  const MyFormItemGroup = ({ prefix, children }: MyFormItemGroupProps) => {
-    const prefixPath = React.useContext(MyFormItemContext);
-    const concatPath = React.useMemo(
-      () => [...prefixPath, ...toArr(prefix)],
-      [prefixPath, prefix]
-    );
+  const [form] = Form.useForm();
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
 
-    return (
-      <MyFormItemContext.Provider value={concatPath}>
-        {children}
-      </MyFormItemContext.Provider>
-    );
+  const onFinish = async (values: IUser) => {
+    try {
+      await changePassword(values).unwrap();
+      message.success("Password changed successfully.");
+      form.resetFields();
+    } catch (error) {
+      console.error("Error changing password:", error);
+      message.error("Failed to change password. Please try again later.");
+    }
   };
 
-  const MyFormItem = ({ name, ...props }: FormItemProps) => {
-    const prefixPath = React.useContext(MyFormItemContext);
-    const concatName =
-      name !== undefined ? [...prefixPath, ...toArr(name)] : undefined;
-
-    return <Form.Item name={concatName} {...props} />;
-  };
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
-
-  const onSearch = (value: string) => {
-    console.log("search:", value);
-  };
-  const filterOption = (
-    input: string,
-    option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   return (
     <div className="wrap-login">
-      <div className="headerLogin">
-        <div className="box_icon">
-          <img src="http://web-qa.hrm.div4.pgtest.co/static/media/HR_Logo.7c93eebe8886301b470d6d7131b23a95.svg" />
-          <h2>HR Management System</h2>
-        </div>
-        <h2>Change Password</h2>
-      </div>
       <div className="loginForm">
-        <Form name="form_item_path" layout="vertical" onFinish={onFinish}>
-          <MyFormItemGroup prefix={["user"]}>
-            <MyFormItemGroup prefix={["name"]}>
-              <MyFormItem name="firstName" label="New Password">
-                <Input />
-              </MyFormItem>
-              <MyFormItem name="lastName" label="Confirm Password">
-                <Input.Password />
-              </MyFormItem>
-            </MyFormItemGroup>
+        <Form form={form} name="change_password" layout="vertical" onFinish={onFinish}>
+          <Form.Item
+            name="newPassword"
+            label="New Password"
+            rules={[
+              { required: true, message: "Please enter your new password!" },
+              { min: 8, message: "Password must be at least 8 characters" },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item
+            name="confirmPassword"
+            label="Confirm Password"
+            dependencies={['newPassword']}
+            rules={[
+              { required: true, message: "Please confirm your new password!" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('newPassword') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                },
+              }),
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
 
-          
-          </MyFormItemGroup>
-
-          <Button type="primary" htmlType="submit">
-            Confirm
-          </Button>
-          
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={isLoading}>
+              Confirm
+            </Button>
+          </Form.Item>
         </Form>
       </div>
     </div>
