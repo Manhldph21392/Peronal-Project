@@ -54,6 +54,16 @@ const employeeApi = createApi({
                 return response.data
             },
         }),
+        deleteEmployee: builder.mutation({
+            query: (record_ids) => ({
+                url: `/employee/multiple-delete`,
+                method: "DELETE",
+                body: { record_ids: record_ids } // Truyền mảng record_ids[]
+            }),
+            transformResponse: (response: { data: IEmployee[] }) => {
+                return response.data
+            },
+        }),
         //department
         getDepartments: builder.query({
             query: () => ({
@@ -122,5 +132,5 @@ const employeeApi = createApi({
 export const { useGetEmployeesQuery, useGetEmployeeByIdQuery,
     useCreateEmployeeMutation, useUpdateEmployeeMutation, useGetDepartmentsQuery,
     useGetPositionQuery, useGetGenderQuery, useGetBenefitQuery, useAddBenefitMutation,
-    useDeleteBenefitMutation } = employeeApi
+    useDeleteBenefitMutation, useDeleteEmployeeMutation } = employeeApi
 export default employeeApi

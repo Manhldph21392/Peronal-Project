@@ -6,6 +6,7 @@ import ForgotPasswordPage from "./models/pages/ForgotPasswordPage";
 import TableEmployee from "./models/components/TableEmployee";
 import ResetPassword from "./models/components/ResetPassword";
 import FormAddEmployee from "./models/components/FormAddEmployee";
+import TableNew from "./models/components/TableNew";
 
 const PrivateRouter = ({ element }: { element: React.ReactNode }) => {
   const token = localStorage.getItem("token");
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "add-employee",
         element: <PrivateRouter element={<FormAddEmployee />} />,
+      },
+      {
+        path: "table-employee",
+        element: <PrivateRouter element={<TableNew />} />,
       },
     ],
   },

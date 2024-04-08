@@ -5,7 +5,6 @@ import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, pers
 import authApi from "../api/auth";
 import employeeApi from "../api/employee";
 import { employeeSlice } from "../slices/employe";
-import EmployeeInfomation from "../models/components/EmployeeInfomation";
 
 const persistConfig = {
     key: "root",
@@ -16,11 +15,12 @@ const persistConfig = {
 const rootReducer = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [employeeApi.reducerPath]: employeeApi.reducer,
+    empployee: employeeSlice.reducer
 });
 
 const middleware = [
     authApi.middleware,
-    employeeApi.middleware
+    employeeApi.middleware,
 ];
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

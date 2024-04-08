@@ -8,6 +8,7 @@ const EmployeeInfomation = () => {
   const { employeeInfomation } = useSelector(
     (state: RootState) => state.employee
   );
+  
   const dispatch = useDispatch();
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
@@ -287,7 +288,7 @@ const EmployeeInfomation = () => {
             </Form.Item>
           </div>
           <div className="form-add-right">
-            <Form.Item label="Marriage Status" name="marriage_status">
+            <Form.Item label="Marriage Status" name="marriageStatus">
               <Select onChange={handleMarriageStatusChange} style={{ width: "100%" }} />
             </Form.Item>
 

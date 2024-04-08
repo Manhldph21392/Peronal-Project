@@ -40,7 +40,9 @@ function getItem(
   } as MenuItem;
 }
 
-const items: MenuItem[] = [getItem("Employee", "1", <PieChartOutlined />)];
+const items: MenuItem[] = [
+  getItem("Employee Management", "1", <Link to={"/table-employee"}></Link>),
+];
 
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -131,8 +133,8 @@ const AdminLayout = () => {
                       </Button>
                       <Link to="/reset-password">Reset Password</Link>
                     </div>
-                  } // Nội dung của popup
-                  trigger="click" // Kích hoạt hiển thị popup khi click
+                  }
+                  trigger="click"
                 >
                   <Avatar
                     style={{ cursor: "pointer" }}

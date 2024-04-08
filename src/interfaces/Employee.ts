@@ -1,4 +1,5 @@
 export interface IEmployee {
+    key: number,
     id: number,
     name: string,
     gender: number,
@@ -36,5 +37,5 @@ export interface IEmployee {
     remark: string,
     account_user_id: number,
     created_at: string,
-    staff_id:number
+    staff_id: number,
 }
