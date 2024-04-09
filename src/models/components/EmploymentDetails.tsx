@@ -1,9 +1,11 @@
-import { DatePicker, Form, Select } from "antd";
+import { Checkbox, CheckboxProps, Form, Select } from "antd";
 import React from "react";
+import { useAppDispatch, useAppSelector } from "../../stores/store"; // Import hook useAppDispatch
 import {
   useGetDepartmentsQuery,
   useGetPositionQuery,
 } from "../../api/employee";
+import { updateEmploymentDetails } from "../../slices/employe";
 
 type Props = {};
 
@@ -13,6 +15,42 @@ const EmploymentDetails = (props: Props) => {
   const { data: positions, isLoading: isPositionsLoading } =
     useGetPositionQuery({});
 
+  const dispatch = useAppDispatch();
+  const { employmentDetails } = useAppSelector((state) => state.employee);
+  const handleDepartmentChange = (value: number) => {
+    dispatch(
+      updateEmploymentDetails({
+        ...employmentDetails,
+        department_id: value,
+      })
+    );
+  };
+
+  // Function to handle change in position selection
+  const handlePositionChange = (value: number) => {
+    dispatch(
+      updateEmploymentDetails({
+        ...employmentDetails,
+        position_id: value,
+      })
+    );
+  };
+  // const handleHiddenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   dispatch(
+  //     updateEmploymentDetails({
+  //       ...employmentDetails,
+  //       hidden_on_payroll: e.target.checked.toString(),
+  //     })
+  //   );
+  // };
+  const handleHiddenChange: CheckboxProps["onChange"] = (e) => {
+    dispatch(
+      updateEmploymentDetails({
+        ...employmentDetails,
+        hidden_on_payroll: e.target.checked?"1":"0",
+      })
+    );
+  };
   return (
     <div className="box_add">
       <div className="header-form">
@@ -22,11 +60,12 @@ const EmploymentDetails = (props: Props) => {
         </div>
       </div>
       <div className="content_employment">
-        <Form.Item label="Department" name="department">
+        <Form.Item label="Department" name="department_id">
           <Select
             placeholder="Select a department"
             style={{ width: "100%" }}
             loading={isDepartmentsLoading}
+            onChange={handleDepartmentChange}
           >
             {departments &&
               departments.map((department) => (
@@ -36,11 +75,12 @@ const EmploymentDetails = (props: Props) => {
               ))}
           </Select>
         </Form.Item>
-        <Form.Item label="Position" name="position">
+        <Form.Item label="Position" name="position_id">
           <Select
             placeholder="Select a position"
             style={{ width: "100%" }}
             loading={isPositionsLoading}
+            onChange={handlePositionChange}
           >
             {positions &&
               positions.map((position) => (
@@ -49,6 +89,12 @@ const EmploymentDetails = (props: Props) => {
                 </Select.Option>
               ))}
           </Select>
+        </Form.Item>
+        <Form.Item label="Hidden Payroll" name="hidden_on_payroll">
+          <Checkbox
+            onChange={handleHiddenChange}
+            value={Number(employmentDetails.hidden_on_payroll)}
+          ></Checkbox>
         </Form.Item>
       </div>
     </div>

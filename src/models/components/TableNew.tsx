@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Table, Button, Checkbox, message, Modal } from "antd";
+import { Table, Button, Checkbox, message, Modal, Pagination } from "antd";
 import moment from "moment";
 import { FileAddOutlined, DeleteOutlined } from "@ant-design/icons";
-import { IEmployee } from "../../interfaces/Employee";
 import {
   useGetEmployeesQuery,
   useDeleteEmployeeMutation,
@@ -10,12 +9,22 @@ import {
 import { Link } from "react-router-dom";
 
 const TableNew = () => {
-  const { data: employees = [], refetch } = useGetEmployeesQuery({});
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
   const [deleteEmployee] = useDeleteEmployeeMutation();
   const [confirmVisible, setConfirmVisible] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 20;
 
-  const onSelectChange = (selectedRowKeys) => {
+  const { data: employees = [], refetch } = useGetEmployeesQuery({
+    page: currentPage,
+    size: pageSize,
+  });
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page); // Cập nhật current_page khi chuyển trang
+  };
+
+  const onSelectChange = (selectedRowKeys: any) => {
     setSelectedRowKeys(selectedRowKeys);
   };
 
@@ -32,7 +41,7 @@ const TableNew = () => {
     }
   };
 
-  const handleSelectAll = (e) => {
+  const handleSelectAll = (e: any) => {
     const checked = e.target.checked;
     const allIds = employees.data.map((employee) => employee.id);
     setSelectedRowKeys(checked ? allIds : []);
@@ -42,7 +51,7 @@ const TableNew = () => {
     {
       title: <Checkbox onChange={handleSelectAll} />,
       dataIndex: "selected",
-      render: (_text, record) => (
+      render: (_text: string, record: any) => (
         <Checkbox
           checked={selectedRowKeys.includes(record.id)}
           onChange={() =>
@@ -78,7 +87,7 @@ const TableNew = () => {
     {
       title: "Date",
       dataIndex: "created_at",
-      render: (text) => moment(text).format("DD/MM/YYYY"),
+      render: (text: string) => moment(text).format("DD/MM/YYYY"),
     },
     {
       title: "KTP No.",
@@ -131,10 +140,15 @@ const TableNew = () => {
           Delete
         </Button>
       </div>
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        pagination={{ defaultPageSize: 20 }}
+      <Table dataSource={dataSource} columns={columns} pagination={false} />
+
+      {/* Pagination */}
+      <Pagination
+        style={{ marginTop: "16px", textAlign: "center" }}
+        total={employees.total} // Tổng số Employee
+        pageSize={pageSize}
+        current={currentPage}
+        onChange={handlePageChange}
       />
 
       {/* Modal confirm khi xóa */}

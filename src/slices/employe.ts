@@ -1,44 +1,48 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
 interface IEmployeeInfomation {
     name: string,
-    email: string,
-    phone: string,
-    birthday: string,
-    address1: string,
-    gender: string,
+    home_address_1: string,
+    gender: number,
     id: string,
-    motherName: string,
-    dateofBirth: string,
-    placeofBirth: string,
-    ktpNo: string,
-    taxId: string,
-    address2: string,
-    mobileNo: string,
-    telNo: string,
-    maritalStatus: string,
-    bankCardNo: string,
-    bankAccount: string,
-    bankName: string,
-    familyCardNumber: string,
-    safetyInsurance: string,
-    healthInsurance: string,
-    backgroundEducation: string,
+    mother_name: string,
+    dob: string,
+    pob: string,
+    ktp_no: string,
+    taxId: number,
+    home_address_2: string,
+    mobile_no: number,
+    tel_no: number,
+    marriage_id: number,
+    bank_account_no: number,
+    card_number: number,
+    bank_name: string,
+    family_card_number: number,
+    safety_insurance_no: string,
+    health_insurance_no: string,
+    education_background: string,
+    emergency_name: string,
+    emergency_relationship: string,
+    emergency_contract: string,
+
 }
 interface IContractInfomation {
-    position: string,
-    department: string,
-    salary: string,
-    benefits: [],
+    contract_start_date: string,
+    type: number,
+    contract_date_from: string,
+    contract_date_to: string,
+    contract_from_extension: string,
+    contract_to_extension: string,
+    contract_date: string,
+    contract_name: string,
 }
 interface IEmploymentDetails {
-    startDate: string,
-    endDate: string,
-    id: string,
+    department_id: number,
+    position_id: number,
+    hidden_on_payroll: string
 }
 interface ISalaryWages {
-    salary: string,
+    salary: number,
     basic_audit: number,
     satefy_insurance: number,
     health_insurance: number,
@@ -59,55 +63,11 @@ interface IInitialState {
 }
 
 export const initialState: IInitialState = {
-    employeeInfomation: {
-        name: "",
-        email: "",
-        phone: "",
-        birthday: "",
-        address1: "",
-        gender: "",
-        id: "",
-        motherName: "",
-        dateofBirth: "",
-        placeofBirth: "",
-        ktpNo: "",
-        taxId: "",
-        address2: "",
-        mobileNo: "",
-        telNo: "",
-        maritalStatus: "",
-        bankCardNo: "",
-        bankAccount: "",
-        bankName: "",
-        familyCardNumber: "",
-        safetyInsurance: "",
-        healthInsurance: "",
-        backgroundEducation: "",
-
-    },
-    contractInfomation: {
-        position: "",
-        department: "",
-        salary: "",
-        benefits: [],
-    },
-    employmentDetails: {
-        startDate: "",
-        endDate: "",
-        id: "",
-    },
-    salaryWages: {
-        salary: "",
-        basic_audit: 0,
-        satefy_insurance: 0,
-        health_insurance: 0,
-        meal_allowance: 0,
-    },
-    other: {
-        grade: 0,
-        remark: "",
-        benefits: [],
-    },
+    employeeInfomation: {} as IEmployeeInfomation,
+    contractInfomation: {} as IContractInfomation,
+    employmentDetails: {} as IEmploymentDetails,
+    salaryWages: {} as ISalaryWages,
+    other: {} as IOther,
 }
 export const employeeSlice = createSlice({
     name: "employee",
@@ -127,8 +87,10 @@ export const employeeSlice = createSlice({
         },
         updateOther: (state, action: PayloadAction<IOther>) => {
             state.other = action.payload
-        }
+        },
     }
 })
+
 export const { updateEmployeeInfomation, updateContractInfomation, updateEmploymentDetails, updateSalaryWages, updateOther } = employeeSlice.actions
+
 export default employeeSlice.reducer

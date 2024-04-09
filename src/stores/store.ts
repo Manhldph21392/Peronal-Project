@@ -16,7 +16,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [employeeApi.reducerPath]: employeeApi.reducer,
-    empployee: employeeSlice.reducer
+    employee: employeeSlice.reducer
 });
 
 const middleware = [
@@ -29,9 +29,7 @@ const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-            },
+            serializableCheck: false
         }).concat(middleware),
 });
 export type RootState = ReturnType<typeof store.getState>

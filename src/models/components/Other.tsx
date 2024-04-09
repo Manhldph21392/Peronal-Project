@@ -2,6 +2,8 @@ import { Button, Form, Input, Select, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { DeleteOutlined, UploadOutlined } from "@ant-design/icons";
 import { useGetDepartmentsQuery, useGetBenefitQuery } from "../../api/employee";
+import { useAppDispatch, useAppSelector } from "../../stores/store";
+import { updateOther } from "../../slices/employe";
 
 type Props = {};
 
@@ -14,6 +16,8 @@ const Other = (props: Props) => {
   const [gradeOptions, setGradeOptions] = useState<any[]>([]);
   const [benefitList, setBenefitList] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const { other } = useAppSelector((state) => state.employee);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -43,7 +47,16 @@ const Other = (props: Props) => {
       setBenefitList(benefitNames);
     }
   }, [benefits]);
-
+  const handleBenefitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setBenefitList([...benefitList, e.target.value]);
+    } else {
+      setBenefitList(benefitList.filter((item) => item !== e.target.value));
+    }
+  };
+  const handleGradeChange = (value: number) => {
+    dispatch(updateOther({ ...other, grade: value }));
+  };
   return (
     <div className="box_add">
       <div className="header-form">
@@ -55,6 +68,8 @@ const Other = (props: Props) => {
             style={{ width: "100%" }}
             loading={isDepartmentsLoading}
             options={gradeOptions}
+            value={other.grade}
+            onChange={handleGradeChange}
           />
         </Form.Item>
         <Form.Item label="Benefit" name="benefit">

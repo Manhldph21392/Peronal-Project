@@ -1,28 +1,24 @@
 import { Button, DatePicker, Input, Select } from "antd";
-import { UseDispatch, useDispatch, useSelector } from "react-redux";
-import { updateEmployeeInfomation } from "../../slices/employe";
 import { Form } from "antd";
 import React from "react";
-import { RootState } from "../../stores/employeManager";
-import { useAppSelector } from "../../stores/store";
+
+import { updateEmployeeInfomation } from "../../slices/employe";
+import { useAppDispatch, useAppSelector } from "../../stores/store";
+import { useGetMarriageQuery } from "../../api/employee";
 const EmployeeInfomation = () => {
-  const  state = useAppSelector(
-    (state) => state.employee
-  );
-  console.log(state);
-  
-  
-  const dispatch = useDispatch();
+  const { employeeInfomation } = useAppSelector((state) => state.employee);
+  const { data: marriages = [] } = useGetMarriageQuery({});
+  const dispatch = useAppDispatch();
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
       updateEmployeeInfomation({ ...employeeInfomation, name: e.target.value })
     );
   };
-  const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleGenderChange = (value: number) => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
-        gender: e.target.value,
+        gender: value,
       })
     );
   };
@@ -30,23 +26,26 @@ const EmployeeInfomation = () => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
-        motherName: e.target.value,
+        mother_name: e.target.value,
       })
     );
   };
-  const handleDateofBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      updateEmployeeInfomation({
-        ...employeeInfomation,
-        dateofBirth: e.target.value,
-      })
-    );
+  const handleDateofBirthChange = (date: moment.Moment | null) => {
+    if (date) {
+      const dateString = date.format("DD/MM/YYYY");
+      dispatch(
+        updateEmployeeInfomation({
+          ...employeeInfomation,
+          dob: dateString,
+        })
+      );
+    }
   };
   const handlePlaceofBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
-        placeofBirth: e.target.value,
+        dob: e.target.value,
       })
     );
   };
@@ -54,23 +53,29 @@ const EmployeeInfomation = () => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
-        ktpNo: e.target.value,
+        ktp_no: e.target.value,
       })
     );
   };
   const handleTaxIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      updateEmployeeInfomation({
-        ...employeeInfomation,
-        taxId: e.target.value,
-      })
-    );
+    const taxIdValue = Number(e.target.value);
+
+    if (!isNaN(taxIdValue)) {
+      dispatch(
+        updateEmployeeInfomation({
+          ...employeeInfomation,
+          taxId: taxIdValue,
+        })
+      );
+    } else {
+      console.log("Giá trị nhập không hợp lệ");
+    }
   };
   const handleAdress1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
-        address1: e.target.value,
+        home_address_1: e.target.value,
       })
     );
   };
@@ -78,69 +83,93 @@ const EmployeeInfomation = () => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
-        address2: e.target.value,
+        home_address_2: e.target.value,
       })
     );
   };
   const handleMobileNoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      updateEmployeeInfomation({
-        ...employeeInfomation,
-        mobileNo: e.target.value,
-      })
-    );
+    const mobileNoValue = Number(e.target.value);
+    if (!isNaN(mobileNoValue)) {
+      dispatch(
+        updateEmployeeInfomation({
+          ...employeeInfomation,
+          mobile_no: mobileNoValue,
+        })
+      );
+    } else {
+      console.log("Giá trị này không hợp lệ");
+    }
   };
   const handleTelNoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      updateEmployeeInfomation({
-        ...employeeInfomation,
-        telNo: e.target.value,
-      })
-    );
+    const telNoValue = Number(e.target.value);
+    if (!isNaN(telNoValue)) {
+      dispatch(
+        updateEmployeeInfomation({
+          ...employeeInfomation,
+          tel_no: telNoValue,
+        })
+      );
+    } else {
+      console.log("Giá trị này không hợp lệ");
+    }
   };
-  const handleMarriageStatusChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleMarriageStatusChange = (value: number) => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
-        maritalStatus: e.target.value,
+        marriage_id: value,
       })
     );
   };
   const handleBankCardNoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      updateEmployeeInfomation({
-        ...employeeInfomation,
-        bankCardNo: e.target.value,
-      })
-    );
+    const bankCardNoValue = Number(e.target.value);
+
+    if (!isNaN(bankCardNoValue)) {
+      dispatch(
+        updateEmployeeInfomation({
+          ...employeeInfomation,
+          card_number: bankCardNoValue,
+        })
+      );
+    } else {
+      console.log("Giá trị này không hợp lệ");
+    }
   };
   const handlebankAccountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      updateEmployeeInfomation({
-        ...employeeInfomation,
-        bankAccount: e.target.value,
-      })
-    );
+    const bankAccountValue = Number(e.target.value);
+    if (!isNaN(bankAccountValue)) {
+      dispatch(
+        updateEmployeeInfomation({
+          ...employeeInfomation,
+          bank_account_no: bankAccountValue,
+        })
+      );
+    } else {
+      console.log("Giá trị này không hợp lệ");
+    }
   };
   const handleBankNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
-        bankName: e.target.value,
+        bank_name: e.target.value,
       })
     );
   };
   const handleFamilyCardNumberChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    dispatch(
-      updateEmployeeInfomation({
-        ...employeeInfomation,
-        familyCardNumber: e.target.value,
-      })
-    );
+    const familyCardNumberValue = Number(e.target.value);
+    if (!isNaN(familyCardNumberValue)) {
+      dispatch(
+        updateEmployeeInfomation({
+          ...employeeInfomation,
+          family_card_number: familyCardNumberValue,
+        })
+      );
+    } else {
+      console.log("Giá trị này không hợp lệ");
+    }
   };
   const handleSafetyInsuranceChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -148,7 +177,7 @@ const EmployeeInfomation = () => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
-        safetyInsurance: e.target.value,
+        safety_insurance_no: e.target.value,
       })
     );
   };
@@ -158,7 +187,7 @@ const EmployeeInfomation = () => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
-        healthInsurance: e.target.value,
+        health_insurance_no: e.target.value,
       })
     );
   };
@@ -168,11 +197,40 @@ const EmployeeInfomation = () => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
-        backgroundEducation: e.target.value,
+        education_background: e.target.value,
       })
     );
   };
-
+  const handleEmergencyContractChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    dispatch(
+      updateEmployeeInfomation({
+        ...employeeInfomation,
+        emergency_contract: e.target.value,
+      })
+    );
+  };
+  const handleEmergenctRelationshipChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    dispatch(
+      updateEmployeeInfomation({
+        ...employeeInfomation,
+        emergency_relationship: e.target.value,
+      })
+    );
+  };
+  const handleEmergencyNameChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    dispatch(
+      updateEmployeeInfomation({
+        ...employeeInfomation,
+        emergency_name: e.target.value,
+      })
+    );
+  };
   return (
     <div>
       <div className="box_add">
@@ -207,25 +265,25 @@ const EmployeeInfomation = () => {
             >
               <Select
                 showSearch
-             
                 onChange={handleGenderChange}
+                value={employeeInfomation.gender}
                 placeholder="Select a gender"
                 options={[
                   {
-                    value: "male",
+                    value: 0,
                     label: "Male",
                   },
                   {
-                    value: "female",
+                    value: 1,
                     label: "Female",
                   },
                 ]}
               />
             </Form.Item>
 
-            <Form.Item label="Mother Name" name="motherName">
+            <Form.Item label="Mother Name" name="mother_name">
               <Input
-                value={employeeInfomation.motherName}
+                value={employeeInfomation.mother_name}
                 onChange={handleMotherNameChange}
               />
             </Form.Item>
@@ -242,7 +300,6 @@ const EmployeeInfomation = () => {
             >
               <DatePicker
                 onChange={handleDateofBirthChange}
-             
                 style={{ width: "100%" }}
               />
             </Form.Item>
@@ -257,7 +314,10 @@ const EmployeeInfomation = () => {
                 },
               ]}
             >
-              <Input value={employeeInfomation.placeofBirth} onChange={handlePlaceofBirthChange} />
+              <Input
+                value={employeeInfomation.pob}
+                onChange={handlePlaceofBirthChange}
+              />
             </Form.Item>
 
             <Form.Item
@@ -267,73 +327,130 @@ const EmployeeInfomation = () => {
                 { required: true, message: "Please KTP No is required!" },
               ]}
             >
-              <Input value={employeeInfomation.ktpNo} onChange={handleKtpNoChange} />
+              <Input
+                value={employeeInfomation.ktp_no}
+                onChange={handleKtpNoChange}
+              />
             </Form.Item>
 
             <Form.Item label="Tax ID" name="tax_id">
-              <Input value={employeeInfomation.taxId} onChange={handleTaxIdChange} />
+              <Input
+                value={employeeInfomation.taxId}
+                onChange={handleTaxIdChange}
+              />
             </Form.Item>
 
-            <Form.Item label="Home Address1" name="home_address1">
-              <Input value={employeeInfomation.address1} onChange={handleAdress1Change} />
+            <Form.Item label="Home Address1" name="home_address_1">
+              <Input
+                value={employeeInfomation.home_address_1}
+                onChange={handleAdress1Change}
+              />
             </Form.Item>
 
-            <Form.Item label="Home Address2" name="home_address2">
-              <Input value={employeeInfomation.address2} onChange={handleAdress2Change} />
+            <Form.Item label="Home Address2" name="home_address_2">
+              <Input
+                value={employeeInfomation.home_address_2}
+                onChange={handleAdress2Change}
+              />
             </Form.Item>
 
             <Form.Item label="Mobile No" name="mobile_no">
-              <Input value={employeeInfomation.mobileNo} onChange={handleMobileNoChange} />
+              <Input
+                value={employeeInfomation.mobile_no}
+                onChange={handleMobileNoChange}
+              />
             </Form.Item>
 
             <Form.Item label="Tel No" name="tel_no">
-              <Input value={employeeInfomation.telNo} onChange={handleTelNoChange} />
+              <Input
+                value={employeeInfomation.tel_no}
+                onChange={handleTelNoChange}
+              />
             </Form.Item>
           </div>
           <div className="form-add-right">
-            <Form.Item label="Marriage Status" name="marriageStatus">
-              <Select onChange={handleMarriageStatusChange} style={{ width: "100%" }} />
+            <Form.Item label="Marriage Status" name="marriage_id">
+              <Select
+                onChange={handleMarriageStatusChange}
+                style={{ width: "100%" }}
+              >
+                {marriages.map((marriage) => (
+                  <Select.Option key={marriage.id} value={marriage.id}>
+                    {marriage.name}{" "}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
 
-            <Form.Item label="Bank Card No." name="bank_card_no">
-              <Input />
+            <Form.Item label="Bank Card No." name="card_number">
+              <Input
+                onChange={handleBankCardNoChange}
+                value={employeeInfomation.card_number}
+              />
             </Form.Item>
 
             <Form.Item label="Bank Account No" name="bank_account_no">
-              <Input />
+              <Input
+                onChange={handlebankAccountChange}
+                value={employeeInfomation.bank_account_no}
+              />
             </Form.Item>
 
             <Form.Item label="Bank Name" name="bank_name">
-              <Input />
+              <Input
+                onChange={handleBankNameChange}
+                value={employeeInfomation.bank_name}
+              />
             </Form.Item>
 
             <Form.Item label="Family Card Number" name="family_card_number">
-              <Input />
+              <Input
+                onChange={handleFamilyCardNumberChange}
+                value={employeeInfomation.family_card_number}
+              />
             </Form.Item>
 
             <Form.Item label="Safety Insurance No." name="safety_insurance_no">
-              <Input />
+              <Input
+                onChange={handleSafetyInsuranceChange}
+                value={employeeInfomation.safety_insurance_no}
+              />
             </Form.Item>
 
             <Form.Item label="Health Insurance No." name="health_insurance_no">
-              <Input />
+              <Input
+                onChange={handleHeathInsuranceChange}
+                value={employeeInfomation.health_insurance_no}
+              />
             </Form.Item>
 
             <Form.Item label="Education Background" name="education_background">
-              <Input.TextArea />
+              <Input
+                onChange={handleBacgroundEducationChange}
+                value={employeeInfomation.education_background}
+              />
             </Form.Item>
 
             <div className="form_contact_infomation">
-              <Form.Item label="Home Address2" name="home_address2">
-                <Input />
+              <Form.Item label="Home Address2" name="emergency_name">
+                <Input
+                  value={employeeInfomation.emergency_name}
+                  onChange={handleEmergencyNameChange}
+                />
               </Form.Item>
 
-              <Form.Item label="Mobile No" name="mobile_no">
-                <Input />
+              <Form.Item label="Mobile No" name="emergency_contract">
+                <Input
+                  value={employeeInfomation.emergency_contract}
+                  onChange={handleEmergencyContractChange}
+                />
               </Form.Item>
 
-              <Form.Item label="Tel No" name="tel_no">
-                <Input />
+              <Form.Item label="Tel No" name="emergency_relationship">
+                <Input
+                  value={employeeInfomation.emergency_relationship}
+                  onChange={handleEmergenctRelationshipChange}
+                />
               </Form.Item>
             </div>
           </div>

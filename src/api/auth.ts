@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IUser } from "../interfaces/User";
 
 export const authApi = createApi({
-    reducerPath: 'auth',
+    reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://api-training.hrm.div4.pgtest.co/api/v1',
         prepareHeaders: (headers, { }) => {

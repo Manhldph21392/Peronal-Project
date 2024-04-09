@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IEmployee } from "../interfaces/Employee";
 
 const employeeApi = createApi({
-    reducerPath: "employee",
+    reducerPath: "employeeApi",
     baseQuery: fetchBaseQuery({
         baseUrl: "https://api-training.hrm.div4.pgtest.co/api/v1",
         prepareHeaders: (headers, { }) => {
@@ -15,11 +15,9 @@ const employeeApi = createApi({
     }),
     endpoints: (builder) => ({
         getEmployees: builder.query({
-            query: () => ({
-                url: "employee",
+            query: (args: { page: number, size: number }) => ({
+                url: `employee?page=${args.page}&size=${args.size}`,
                 method: "GET",
-
-
             }),
             transformResponse: (response: { data: IEmployee[] }) => {
                 return response.data
@@ -36,13 +34,11 @@ const employeeApi = createApi({
         }),
         createEmployee: builder.mutation({
             query: (employee) => ({
-                url: "employee",
+                url: "/employee",
                 method: "POST",
                 body: employee
             }),
-            transformResponse: (response: { data: IEmployee[] }) => {
-                return response.data
-            },
+
         }),
         updateEmployee: builder.mutation({
             query: (employee) => ({
@@ -124,7 +120,17 @@ const employeeApi = createApi({
             transformResponse: (response: { data: IEmployee[] }) => {
                 return response.data
             },
-        })
+        }),
+        //marriage
+        getMarriage: builder.query({
+            query: () => ({
+                url: "/marriage",
+                method: "GET"
+            }),
+            transformResponse: (response: { data: IEmployee[] }) => {
+                return response.data
+            },
+        }),
 
 
     })
@@ -132,5 +138,5 @@ const employeeApi = createApi({
 export const { useGetEmployeesQuery, useGetEmployeeByIdQuery,
     useCreateEmployeeMutation, useUpdateEmployeeMutation, useGetDepartmentsQuery,
     useGetPositionQuery, useGetGenderQuery, useGetBenefitQuery, useAddBenefitMutation,
-    useDeleteBenefitMutation, useDeleteEmployeeMutation } = employeeApi
+    useDeleteBenefitMutation, useDeleteEmployeeMutation, useGetMarriageQuery } = employeeApi
 export default employeeApi
