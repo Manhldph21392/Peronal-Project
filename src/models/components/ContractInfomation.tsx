@@ -230,9 +230,9 @@ const ContractInfomation = () => {
                 </Form.Item>
                 <div className="group_button">
                   <Upload {...props}>
-                    <Button icon={<UploadOutlined />}>Upload file</Button>
+                    <Button className="btn btn-upload" icon={<UploadOutlined />}>Upload file</Button>
                   </Upload>
-                  <Button>Add</Button>
+                  <Button className="btn btn-add">Add</Button>
                 </div>
               </div>
               <div className="content_right">

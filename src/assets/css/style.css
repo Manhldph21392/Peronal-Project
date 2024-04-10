@@ -1,0 +1,340 @@
+@font-face {
+    font-family: "Sofia pro";
+    src: url(../fonts/SVN-SofiaPro/SVN-SofiaPro.ttf);
+}
+
+body {
+    font-family: "Sofia pro" !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+p,
+a {
+    font-family: "Sofia pro";
+}
+
+/* table */
+.box_table {
+    margin: 30px 46px 0px;
+}
+
+.box_table .ant-table-cell {
+    min-width: 150px;
+}
+
+.box_table .ant-table-row {
+    background: #fff;
+}
+
+.box_table .ant-table-content {
+    overflow: auto;
+}
+
+.action_table {
+    text-align: right;
+    padding: 20px 10px;
+    background: #fff;
+    border-radius: 10px 10px 0 0;
+}
+
+.action_table button {
+    margin: 0 5px;
+}
+
+.box_table .ant-table-content {
+    overflow: auto;
+    max-height: 525px;
+    min-height: 525px;
+    font-family: "Sofia pro";
+    font-size: 14px;
+}
+
+.header_table .title h3 {
+    font-size: 36px;
+    margin: 0;
+    margin-bottom: 30px;
+}
+
+.box_table .ant-table-content::-webkit-scrollbar {
+    width: 3px;
+    /* Chiều rộng của thanh cuộn */
+}
+
+.box_table .ant-table-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Màu nền của thanh cuộn */
+}
+
+.box_table .ant-table-content::-webkit-scrollbar-thumb {
+    background-color: rgb(215, 219, 223);
+    border-radius: 32px;
+    border: 2px solid rgb(241, 243, 245);
+}
+
+.row_pagination {
+    display: flex;
+    justify-content: left;
+}
+
+/* Add */
+.box_content_add {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-add-left {
+    width: 45%;
+}
+
+.form-add-right {
+    width: 45%;
+}
+
+.box_add {
+    margin: 30px 46px 0px;
+    background: #fff;
+    padding: 0 20px 30px;
+}
+
+.header-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 0.5px solid #000;
+}
+
+.header-form .title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.status_required {
+    font-weight: 500;
+}
+
+.status_required span {
+    color: red;
+}
+
+.form_contact_infomation {
+    border: 2px solid rgb(223, 227, 230);
+    padding: 20px 8px 8px;
+    border-radius: 6px
+}
+
+.box_add .ant-row {
+    justify-content: space-between;
+    height: 50px;
+}
+
+.short_line {
+    width: 40%;
+}
+
+.contract {
+    width: 45%;
+}
+
+.long_line {
+    display: flex;
+    justify-content: space-between;
+}
+
+.box_tabs .ant-tabs-nav {
+    padding: 25px 0 10px 55px;
+}
+
+.table_contract_content {
+    display: flex;
+    flex-flow: wrap;
+    padding: 20px 14px 30px 20px;
+    gap: 20px;
+}
+
+.content_left {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    gap: 10px;
+    flex: 1 1 0%;
+}
+
+.content_right {
+    flex: 1 1 0%;
+}
+
+.table_contract {
+    border: 1px solid rgb(223, 227, 230);
+    border-radius: 6px;
+}
+
+.table_contract_title h4 {
+    margin: 0;
+}
+
+.table_contract_title {
+    padding: 5px 20px;
+    background: rgb(241, 243, 245);
+    color: rgb(104, 112, 118);
+    font-size: 12px;
+}
+
+.table_contract p {
+    font-weight: 400;
+    color: rgb(104, 112, 118);
+    padding: 10px 20px;
+    margin: 0;
+    border-bottom: 1px solid rgba(193, 200, 205, 0.24);
+}
+
+.ant-input {
+    padding: 12px;
+}
+
+.group_button {
+    display: flex;
+    gap: 10px;
+}
+
+.content_employment {
+    max-width: 560px;
+}
+
+.content_other {
+    max-width: 560px;
+}
+
+.list_benefit ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.list_benefit ul {
+    padding: 0;
+}
+
+.list_benefit button {
+    height: 40px;
+    border: 1px dashed;
+}
+
+.benefit_item {
+    width: 85%;
+    background: rgb(241, 243, 245);
+    padding: 10px 20px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.actions_benefit {
+    width: 10%;
+}
+
+.list_benefit {
+    padding: 0;
+}
+
+.actions_benefit button {
+    height: 40px;
+}
+
+.title_page {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title_page h2 {
+    padding-left: 40px;
+    font-size: 36px;
+    margin: 0;
+}
+
+
+.ant-tabs-tab {
+    color: rgb(0, 145, 255) !important;
+    box-shadow: none;
+    border-radius: 6px;
+    height: 42px;
+    background-color: rgb(237, 246, 255) !important;
+    min-width: 175px;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.ant-tabs-tab-active {
+    background-color: rgb(0, 145, 255) !important;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: rgb(251, 253, 255) !important;
+
+}
+
+.ant-tabs-tab-btn {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.box_content_add input {
+    padding: 12px;
+}
+
+.content_employment input {
+    padding: 12px !important;
+}
+
+.content_employment input {
+    padding: 12px !important;
+}
+
+.ant-select-selector {
+    height: 50px !important;
+}
+
+.ant-picker {
+    padding: 12px;
+}
+
+.btn-upload {
+    color: rgb(0, 145, 255);
+    box-shadow: none;
+    border-radius: 6px;
+    height: 48px;
+    font-size: 16px;
+    background-color: rgb(237, 246, 255);
+    min-width: 195px;
+    border: 1px dashed;
+}
+
+.btn-add {
+    color: rgb(234, 251, 246);
+    background-color: rgb(105, 217, 193);
+    box-shadow: none;
+    border-radius: 6px;
+    height: 48px;
+    font-size: 16px;
+    min-width: 195px;
+}
+
+.ant-layout-sider-children {
+    background-color: rgb(255, 255, 255);
+    color: rgb(17, 24, 28);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    box-shadow: none;
+    border-radius: 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    outline: 0px;
+    border-right: 1px solid rgba(193, 200, 205, 0.24);
+}

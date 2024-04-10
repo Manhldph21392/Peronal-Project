@@ -6,7 +6,6 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     flex-direction: column;
     background-color: rgb(248, 249, 250);
     padding-bottom: 100px;
@@ -21,6 +20,8 @@ li {
 .headerLogin h2 {
     font-size: 45px;
     font-weight: 500;
+    margin-top: 32px;
+    margin-bottom: 20px;
 }
 
 .loginForm {
@@ -38,7 +39,7 @@ li {
 }
 
 .loginForm form {
-    margin: auto
+    width: 100%;
 }
 
 .box_icon h2 {
@@ -51,19 +52,95 @@ li {
 
 
 .header_body {
-    display: flex;
     justify-content: space-between;
     padding: 0 10px;
+    box-shadow: rgb(236, 238, 240) 0px 3px 15px;
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0px;
+    left: auto;
+    right: 0px;
+    background-color: rgb(255, 255, 255);
+    z-index: 9;
+    border-radius: 0px;
+    align-items: center;
 }
 
 .header_body_left img {
-    width: 50px;
+    width: 45px;
+    height: 45px;
+}
+
+.header_body_left h2 {
+    margin: 0;
+}
+
+.header_body_right .ant-avatar {
+    width: 45px;
+    height: 45px;
+}
+
+.header_body_left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header_body_left h2 {
+    margin: 0;
+}
+
+.header_table {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.box_search input {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+}
+
+.header_table {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.box_search input {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+}
+
+.loginForm .ant-input {
+    padding: 12px;
+    background-color: rgb(241, 243, 245);
+}
+
+.loginForm .ant-input-affix-wrapper {
+    padding: 12px;
+    background-color: rgb(241, 243, 245);
 }
 
 .avt_name_popup {
     display: flex;
     gap: 10px;
     align-items: center;
+}
+
+.loginForm .ant-select-selector {
+    background-color: rgb(241, 243, 245) !important;
+}
+
+.loginForm button {
+    width: 100%;
+    height: 48px;
+    margin-top: 18px;
+    font-size: 16px;
 }
 
 .avt_popup button {
@@ -73,177 +150,4 @@ li {
 
 .avt_popup {
     min-width: 300px;
-}
-
-
-
-/* table */
-.box_table {
-    margin: 30px 46px 0px;
-    overflow: auto;
-}
-
-.box_table .ant-table-cell {
-    min-width: 150px;
-}
-
-.box_table .ant-table-row {
-    background: #fff;
-}
-
-.box_table .ant-table-content {
-    overflow: auto;
-}
-
-.action_table {
-    text-align: right;
-    padding: 20px 10px;
-    background: #fff;
-    border-radius: 10px 10px 0 0;
-}
-
-.action_table button {
-    margin: 0 5px;
-}
-
-
-
-
-/* Add */
-.box_content_add {
-    display: flex;
-    justify-content: space-between;
-}
-
-.form-add-left {
-    width: 45%;
-}
-
-.form-add-right {
-    width: 45%;
-}
-
-.box_add {
-    margin: 30px 46px 0px;
-    background: #fff;
-    padding: 0 20px 30px;
-}
-
-.header-form {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 0.5px solid #000;
-}
-
-.header-form .title {
-    font-weight: 500;
-}
-
-.status_required {
-    font-weight: 500;
-}
-
-.status_required span {
-    color: red;
-}
-
-.form_contact_infomation {
-    border: 2px solid rgb(223, 227, 230);
-    padding: 20px 8px 8px;
-    border-radius: 6px
-}
-
-.box_add .ant-row {
-    justify-content: space-between;
-}
-
-.short_line {
-    width: 40%;
-}
-
-.contract {
-    width: 45%;
-}
-
-.long_line {
-    display: flex;
-    justify-content: space-between;
-}
-
-.box_tabs .ant-tabs-nav {
-    padding: 25px 0 10px 55px;
-}
-
-.table_contract_content {
-    display: flex;
-    justify-content: space-between;
-}
-
-.content_left {
-    width: 50%;
-}
-
-.content_right {
-    width: 50%;
-}
-
-.group_button {
-    display: flex;
-}
-
-.content_employment {
-    max-width: 560px;
-}
-
-.content_other {
-    max-width: 560px;
-}
-
-.list_benefit ul li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.list_benefit ul {
-    padding: 0;
-}
-
-.list_benefit button {
-    height: 40px;
-    border: 1px dashed;
-}
-
-.benefit_item {
-    width: 85%;
-    background: rgb(241, 243, 245);
-    padding: 10px 20px;
-    border-radius: 6px;
-    margin-bottom: 10px;
-}
-
-.actions_benefit {
-    width: 10%;
-}
-
-.list_benefit {
-    padding: 0;
-}
-
-.actions_benefit button {
-    height: 40px;
-}
-
-.title_page {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.title_page h2 {
-    padding-left: 40px;
-    font-size: 36px;
-    margin: 0;
 }

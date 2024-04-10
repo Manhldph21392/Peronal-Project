@@ -432,21 +432,21 @@ const EmployeeInfomation = () => {
             </Form.Item>
 
             <div className="form_contact_infomation">
-              <Form.Item label="Home Address2" name="emergency_name">
+              <Form.Item label="Name" name="emergency_name">
                 <Input
                   value={employeeInfomation.emergency_name}
                   onChange={handleEmergencyNameChange}
                 />
               </Form.Item>
 
-              <Form.Item label="Mobile No" name="emergency_contract">
+              <Form.Item label="Relationship" name="emergency_contract">
                 <Input
                   value={employeeInfomation.emergency_contract}
                   onChange={handleEmergencyContractChange}
                 />
               </Form.Item>
 
-              <Form.Item label="Tel No" name="emergency_relationship">
+              <Form.Item label="Contact" name="emergency_relationship">
                 <Input
                   value={employeeInfomation.emergency_relationship}
                   onChange={handleEmergenctRelationshipChange}

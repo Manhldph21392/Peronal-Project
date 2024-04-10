@@ -90,11 +90,11 @@ const EmploymentDetails = (props: Props) => {
               ))}
           </Select>
         </Form.Item>
-        <Form.Item label="Hidden Payroll" name="hidden_on_payroll">
+        <Form.Item label="" name="hidden_on_payroll">
           <Checkbox
             onChange={handleHiddenChange}
             value={Number(employmentDetails.hidden_on_payroll)}
-          ></Checkbox>
+          >Hidden On Payroll</Checkbox>
         </Form.Item>
       </div>
     </div>

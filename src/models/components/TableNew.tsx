@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Table, Button, Checkbox, message, Modal, Pagination } from "antd";
+import {
+  Table,
+  Button,
+  Checkbox,
+  message,
+  Modal,
+  Pagination,
+  Spin,
+} from "antd";
 import moment from "moment";
 import { FileAddOutlined, DeleteOutlined } from "@ant-design/icons";
 import {
@@ -15,7 +23,11 @@ const TableNew = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 20;
 
-  const { data: employees = [], refetch } = useGetEmployeesQuery({
+  const {
+    data: employees = [],
+    refetch,
+    isLoading: isEmployeesLoading,
+  } = useGetEmployeesQuery({
     page: currentPage,
     size: pageSize,
   });
@@ -124,6 +136,9 @@ const TableNew = () => {
         <div className="title">
           <h3>Employee Management</h3>
         </div>
+        <div className="box_search">
+          <input type="text" placeholder="Search ..." />
+        </div>
       </div>
       <div className="action_table">
         <Button type="primary">
@@ -143,13 +158,20 @@ const TableNew = () => {
       <Table dataSource={dataSource} columns={columns} pagination={false} />
 
       {/* Pagination */}
-      <Pagination
-        style={{ marginTop: "16px", textAlign: "center" }}
-        total={employees.total} // Tổng số Employee
-        pageSize={pageSize}
-        current={currentPage}
-        onChange={handlePageChange}
-      />
+      {isEmployeesLoading && (
+        <div style={{ textAlign: "center", marginTop: "16px" }}>
+          <Spin />
+        </div>
+      )}
+      <div className="row_pagination">
+        <Pagination
+          style={{ marginTop: "16px", textAlign: "center" }}
+          total={employees.total} // Tổng số Employee
+          pageSize={pageSize}
+          current={currentPage}
+          onChange={handlePageChange}
+        />
+      </div>
 
       {/* Modal confirm khi xóa */}
       <Modal
