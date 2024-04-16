@@ -1,16 +1,17 @@
-import React from "react";
 import { Button, Form, Input, message } from "antd";
 import { useChangePasswordMutation } from "../../api/auth";
 import { IUser } from "../../interfaces/User";
+import { useNavigate } from "react-router-dom";
 
 const ChangePassword = () => {
   const [form] = Form.useForm();
   const [changePassword, { isLoading }] = useChangePasswordMutation();
-
+const navigate = useNavigate();
   const onFinish = async (values: IUser) => {
     try {
       await changePassword(values).unwrap();
       message.success("Password changed successfully.");
+      navigate("/login");
       form.resetFields();
     } catch (error) {
       console.error("Error changing password:", error);
@@ -21,9 +22,14 @@ const ChangePassword = () => {
   return (
     <div className="wrap-login">
       <div className="loginForm">
-        <Form form={form} name="change_password" layout="vertical" onFinish={onFinish}>
+        <Form
+          form={form}
+          name="change_password"
+          layout="vertical"
+          onFinish={onFinish}
+        >
           <Form.Item
-            name="newPassword"
+            name="password"
             label="New Password"
             rules={[
               { required: true, message: "Please enter your new password!" },
@@ -33,17 +39,21 @@ const ChangePassword = () => {
             <Input.Password />
           </Form.Item>
           <Form.Item
-            name="confirmPassword"
+            name="password_confirmation"
             label="Confirm Password"
-            dependencies={['newPassword']}
+            dependencies={["password"]}
             rules={[
               { required: true, message: "Please confirm your new password!" },
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!value || getFieldValue('newPassword') === value) {
+                  if (!value || getFieldValue("password") === value) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                  return Promise.reject(
+                    new Error(
+                      "The two passwords that you entered do not match!"
+                    )
+                  );
                 },
               }),
             ]}
