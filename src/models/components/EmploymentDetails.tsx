@@ -1,11 +1,13 @@
 import { Checkbox, CheckboxProps, Form, Select } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../stores/store"; // Import hook useAppDispatch
 import {
   useGetDepartmentsQuery,
+  useGetEmployeeByIdQuery,
   useGetPositionQuery,
 } from "../../api/employee";
 import { updateEmploymentDetails } from "../../slices/employe";
+import { useParams } from "react-router-dom";
 
 type Props = {};
 
@@ -14,7 +16,15 @@ const EmploymentDetails = (props: Props) => {
     useGetDepartmentsQuery({});
   const { data: positions, isLoading: isPositionsLoading } =
     useGetPositionQuery({});
+  const { id } = useParams<{ id: string }>();
+  const { data: employmenData } = useGetEmployeeByIdQuery(id || "");
+  const [form] = Form.useForm();
 
+  useEffect(() => {
+    if (employmenData) {
+      form.setFieldsValue(employmenData);
+    }
+  }, [employmenData]);
   const dispatch = useAppDispatch();
   const { employmentDetails } = useAppSelector((state) => state.employee);
   const handleDepartmentChange = (value: number) => {
@@ -47,7 +57,7 @@ const EmploymentDetails = (props: Props) => {
     dispatch(
       updateEmploymentDetails({
         ...employmentDetails,
-        hidden_on_payroll: e.target.checked?"1":"0",
+        hidden_on_payroll: e.target.checked ? "1" : "0",
       })
     );
   };
@@ -94,7 +104,9 @@ const EmploymentDetails = (props: Props) => {
           <Checkbox
             onChange={handleHiddenChange}
             value={Number(employmentDetails.hidden_on_payroll)}
-          >Hidden On Payroll</Checkbox>
+          >
+            Hidden On Payroll
+          </Checkbox>
         </Form.Item>
       </div>
     </div>

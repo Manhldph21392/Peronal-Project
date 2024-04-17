@@ -1,14 +1,28 @@
-import { Button, DatePicker, Input, Select } from "antd";
-import { Form } from "antd";
-import React from "react";
+import { Form, DatePicker, Input, Select } from "antd";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { updateEmployeeInfomation } from "../../slices/employe";
 import { useAppDispatch, useAppSelector } from "../../stores/store";
-import { useGetMarriageQuery } from "../../api/employee";
-const EmployeeInfomation = () => {
+import {
+  useGetEmployeeByIdQuery,
+  useGetMarriageQuery,
+} from "../../api/employee";
+const EmployeeInfomation = ({ onUpdateEmployeeInfo }: any) => {
   const { employeeInfomation } = useAppSelector((state) => state.employee);
   const { data: marriages = [] } = useGetMarriageQuery({});
   const dispatch = useAppDispatch();
+  const { id } = useParams<{ id: string }>();
+  const [form] = Form.useForm();
+  const { data: employeeInfomationData } = useGetEmployeeByIdQuery(id || "");
+  const formatDate = "YYYY-MM-DD";
+  useEffect(() => {
+    if (employeeInfomationData) {
+      form.setFieldsValue(employeeInfomationData);
+      onUpdateEmployeeInfo(employeeInfomationData);
+    }
+  }, [employeeInfomationData]);
+
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
       updateEmployeeInfomation({ ...employeeInfomation, name: e.target.value })
@@ -30,22 +44,20 @@ const EmployeeInfomation = () => {
       })
     );
   };
-  const handleDateofBirthChange = (date: moment.Moment | null) => {
-    if (date) {
-      const dateString = date.format("DD/MM/YYYY");
-      dispatch(
-        updateEmployeeInfomation({
-          ...employeeInfomation,
-          dob: dateString,
-        })
-      );
-    }
+  const handleDateofBirthChange = (value: string) => {
+    dispatch(
+      updateEmployeeInfomation({
+        ...employeeInfomation,
+        dob: value,
+      })
+    );
   };
+
   const handlePlaceofBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
-        dob: e.target.value,
+        pob: e.target.value,
       })
     );
   };
@@ -53,7 +65,7 @@ const EmployeeInfomation = () => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
-        ktp_no: e.target.value,
+        ktp_no: Number(e.target.value),
       })
     );
   };
@@ -233,229 +245,245 @@ const EmployeeInfomation = () => {
   };
   return (
     <div>
-      <div className="box_add">
-        <div className="header-form">
-          <h2 className="title">Personal Information</h2>
-          <div className="status_required">
-            Required (<span>*</span>)
+      <Form form={form}>
+        <div className="box_add">
+          <div className="header-form">
+            <h2 className="title">Personal Information</h2>
+            <div className="status_required">
+              Required (<span>*</span>)
+            </div>
           </div>
-        </div>
-        <div className="box_content_add">
-          <div className="form-add-left">
-            <Form.Item
-              label="Name"
-              name="name"
-              rules={[{ required: true, message: "Please, name is required!" }]}
-            >
-              <Input
-                value={employeeInfomation.name}
-                onChange={handleNameChange}
-              />
-            </Form.Item>
+          <div className="box_content_add">
+            <div className="form-add-left">
+              <Form.Item
+                label="Name"
+                id="name"
+                name="name"
+                rules={[
+                  { required: true, message: "Please, name is required!" },
+                ]}
+              >
+                <Input
+                  value={updateEmployeeInfomation.name}
+                  onChange={handleNameChange}
+                />
+              </Form.Item>
 
-            <Form.Item
-              label="Gender"
-              name="gender"
-              rules={[
-                {
-                  required: true,
-                  message: "Please , gender is required!",
-                },
-              ]}
-            >
-              <Select
-                showSearch
-                onChange={handleGenderChange}
-                value={employeeInfomation.gender}
-                placeholder="Select a gender"
-                options={[
+              <Form.Item
+                label="Gender"
+                name="gender"
+                id="gender"
+                rules={[
                   {
-                    value: 0,
-                    label: "Male",
-                  },
-                  {
-                    value: 1,
-                    label: "Female",
+                    required: true,
+                    message: "Please , gender is required!",
                   },
                 ]}
-              />
-            </Form.Item>
-
-            <Form.Item label="Mother Name" name="mother_name">
-              <Input
-                value={employeeInfomation.mother_name}
-                onChange={handleMotherNameChange}
-              />
-            </Form.Item>
-
-            <Form.Item
-              label="Date of birth"
-              name="date_of_birth"
-              rules={[
-                {
-                  required: true,
-                  message: "Please date of birth is required!",
-                },
-              ]}
-            >
-              <DatePicker
-                onChange={handleDateofBirthChange}
-                style={{ width: "100%" }}
-              />
-            </Form.Item>
-
-            <Form.Item
-              label="Place of birth"
-              name="place_of_birth"
-              rules={[
-                {
-                  required: true,
-                  message: "Please Place of birth is required!",
-                },
-              ]}
-            >
-              <Input
-                value={employeeInfomation.pob}
-                onChange={handlePlaceofBirthChange}
-              />
-            </Form.Item>
-
-            <Form.Item
-              label="Ktp No"
-              name="ktp_no"
-              rules={[
-                { required: true, message: "Please KTP No is required!" },
-              ]}
-            >
-              <Input
-                value={employeeInfomation.ktp_no}
-                onChange={handleKtpNoChange}
-              />
-            </Form.Item>
-
-            <Form.Item label="Tax ID" name="tax_id">
-              <Input
-                value={employeeInfomation.taxId}
-                onChange={handleTaxIdChange}
-              />
-            </Form.Item>
-
-            <Form.Item label="Home Address1" name="home_address_1">
-              <Input
-                value={employeeInfomation.home_address_1}
-                onChange={handleAdress1Change}
-              />
-            </Form.Item>
-
-            <Form.Item label="Home Address2" name="home_address_2">
-              <Input
-                value={employeeInfomation.home_address_2}
-                onChange={handleAdress2Change}
-              />
-            </Form.Item>
-
-            <Form.Item label="Mobile No" name="mobile_no">
-              <Input
-                value={employeeInfomation.mobile_no}
-                onChange={handleMobileNoChange}
-              />
-            </Form.Item>
-
-            <Form.Item label="Tel No" name="tel_no">
-              <Input
-                value={employeeInfomation.tel_no}
-                onChange={handleTelNoChange}
-              />
-            </Form.Item>
-          </div>
-          <div className="form-add-right">
-            <Form.Item label="Marriage Status" name="marriage_id">
-              <Select
-                onChange={handleMarriageStatusChange}
-                style={{ width: "100%" }}
               >
-                {marriages.map((marriage) => (
-                  <Select.Option key={marriage.id} value={marriage.id}>
-                    {marriage.name}{" "}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-
-            <Form.Item label="Bank Card No." name="card_number">
-              <Input
-                onChange={handleBankCardNoChange}
-                value={employeeInfomation.card_number}
-              />
-            </Form.Item>
-
-            <Form.Item label="Bank Account No" name="bank_account_no">
-              <Input
-                onChange={handlebankAccountChange}
-                value={employeeInfomation.bank_account_no}
-              />
-            </Form.Item>
-
-            <Form.Item label="Bank Name" name="bank_name">
-              <Input
-                onChange={handleBankNameChange}
-                value={employeeInfomation.bank_name}
-              />
-            </Form.Item>
-
-            <Form.Item label="Family Card Number" name="family_card_number">
-              <Input
-                onChange={handleFamilyCardNumberChange}
-                value={employeeInfomation.family_card_number}
-              />
-            </Form.Item>
-
-            <Form.Item label="Safety Insurance No." name="safety_insurance_no">
-              <Input
-                onChange={handleSafetyInsuranceChange}
-                value={employeeInfomation.safety_insurance_no}
-              />
-            </Form.Item>
-
-            <Form.Item label="Health Insurance No." name="health_insurance_no">
-              <Input
-                onChange={handleHeathInsuranceChange}
-                value={employeeInfomation.health_insurance_no}
-              />
-            </Form.Item>
-
-            <Form.Item label="Education Background" name="education_background">
-              <Input
-                onChange={handleBacgroundEducationChange}
-                value={employeeInfomation.education_background}
-              />
-            </Form.Item>
-
-            <div className="form_contact_infomation">
-              <Form.Item label="Name" name="emergency_name">
-                <Input
-                  value={employeeInfomation.emergency_name}
-                  onChange={handleEmergencyNameChange}
+                <Select
+                  showSearch
+                  onChange={handleGenderChange}
+                  value={employeeInfomation.gender}
+                  placeholder="Select a gender"
+                  options={[
+                    {
+                      value: 0,
+                      label: "Male",
+                    },
+                    {
+                      value: 1,
+                      label: "Female",
+                    },
+                  ]}
                 />
               </Form.Item>
 
-              <Form.Item label="Relationship" name="emergency_contract">
+              <Form.Item label="Mother Name" name="mother_name">
                 <Input
-                  value={employeeInfomation.emergency_contract}
-                  onChange={handleEmergencyContractChange}
+                  value={employeeInfomation.mother_name}
+                  onChange={handleMotherNameChange}
                 />
               </Form.Item>
 
-              <Form.Item label="Contact" name="emergency_relationship">
+              <Form.Item
+                label="Date of birth"
+                name="dob"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please date of birth is required!",
+                  },
+                ]}
+              >
+                {/* <DatePicker
+                  format={formatDate}
+                  onChange={handleDateofBirthChange}
+                  value={employeeInfomation.dob}
+                /> */}
+              </Form.Item>
+
+              <Form.Item
+                label="Place of birth"
+                name="pob"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please Place of birth is required!",
+                  },
+                ]}
+              >
                 <Input
-                  value={employeeInfomation.emergency_relationship}
-                  onChange={handleEmergenctRelationshipChange}
+                  value={employeeInfomation.pob}
+                  onChange={handlePlaceofBirthChange}
+                />
+              </Form.Item>
+
+              <Form.Item
+                label="Ktp No"
+                name="ktp_no"
+                rules={[
+                  { required: true, message: "Please KTP No is required!" },
+                ]}
+              >
+                <Input
+                  value={employeeInfomation.ktp_no}
+                  onChange={handleKtpNoChange}
+                />
+              </Form.Item>
+
+              <Form.Item label="Tax ID" name="tax_id">
+                <Input
+                  value={employeeInfomation.taxId}
+                  onChange={handleTaxIdChange}
+                />
+              </Form.Item>
+
+              <Form.Item label="Home Address1" name="home_address_1">
+                <Input
+                  value={employeeInfomation.home_address_1}
+                  onChange={handleAdress1Change}
+                />
+              </Form.Item>
+
+              <Form.Item label="Home Address2" name="home_address_2">
+                <Input
+                  value={employeeInfomation.home_address_2}
+                  onChange={handleAdress2Change}
+                />
+              </Form.Item>
+
+              <Form.Item label="Mobile No" name="mobile_no">
+                <Input
+                  value={employeeInfomation.mobile_no}
+                  onChange={handleMobileNoChange}
+                />
+              </Form.Item>
+
+              <Form.Item label="Tel No" name="tel_no">
+                <Input
+                  value={employeeInfomation.tel_no}
+                  onChange={handleTelNoChange}
                 />
               </Form.Item>
             </div>
+            <div className="form-add-right">
+              <Form.Item label="Marriage Status" name="marriage_id">
+                <Select
+                  onChange={handleMarriageStatusChange}
+                  style={{ width: "100%" }}
+                >
+                  {marriages.map((marriage) => (
+                    <Select.Option key={marriage.id} value={marriage.id}>
+                      {marriage.name}{" "}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+
+              <Form.Item label="Bank Card No." name="card_number">
+                <Input
+                  onChange={handleBankCardNoChange}
+                  value={employeeInfomation.card_number}
+                />
+              </Form.Item>
+
+              <Form.Item label="Bank Account No" name="bank_account_no">
+                <Input
+                  onChange={handlebankAccountChange}
+                  value={employeeInfomation.bank_account_no}
+                />
+              </Form.Item>
+
+              <Form.Item label="Bank Name" name="bank_name">
+                <Input
+                  onChange={handleBankNameChange}
+                  value={employeeInfomation.bank_name}
+                />
+              </Form.Item>
+
+              <Form.Item label="Family Card Number" name="family_card_number">
+                <Input
+                  onChange={handleFamilyCardNumberChange}
+                  value={employeeInfomation.family_card_number}
+                />
+              </Form.Item>
+
+              <Form.Item
+                label="Safety Insurance No."
+                name="safety_insurance_no"
+              >
+                <Input
+                  onChange={handleSafetyInsuranceChange}
+                  value={employeeInfomation.safety_insurance_no}
+                />
+              </Form.Item>
+
+              <Form.Item
+                label="Health Insurance No."
+                name="health_insurance_no"
+              >
+                <Input
+                  onChange={handleHeathInsuranceChange}
+                  value={employeeInfomation.health_insurance_no}
+                />
+              </Form.Item>
+
+              <Form.Item
+                label="Education Background"
+                name="education_background"
+              >
+                <Input
+                  onChange={handleBacgroundEducationChange}
+                  value={employeeInfomation.education_background}
+                />
+              </Form.Item>
+
+              <div className="form_contact_infomation">
+                <Form.Item label="Name" name="emergency_name">
+                  <Input
+                    value={employeeInfomation.emergency_name}
+                    onChange={handleEmergencyNameChange}
+                  />
+                </Form.Item>
+
+                <Form.Item label="Relationship" name="emergency_contract">
+                  <Input
+                    value={employeeInfomation.emergency_contract}
+                    onChange={handleEmergencyContractChange}
+                  />
+                </Form.Item>
+
+                <Form.Item label="Contact" name="emergency_relationship">
+                  <Input
+                    value={employeeInfomation.emergency_relationship}
+                    onChange={handleEmergenctRelationshipChange}
+                  />
+                </Form.Item>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </Form>
     </div>
   );
 };

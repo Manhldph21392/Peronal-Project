@@ -85,7 +85,7 @@ const Layouts = () => {
                 src="https://s3-alpha-sig.figma.com/img/6650/a3f3/139caf936060b11ca513200f3bf1d056?Expires=1713139200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bkxLzFoN1isH6SJPMAsaFFLsruLuz7-0WdODcG4rLeCZWmMvE7BGUu0gX0frja~HCU5quo-WOc9khgPId3eDpARLQ8HnJM1QF39Ay7B~qK~XZgpKUrd3NjaDdpflcFKabRKr-wvqFY0jO0ltHn~u1uUjSFsw~jDzDqre0SDnykr9EWzX2FWlgbX41FbfEGtZf51PGwHUyLyOhph3MVveKagIUO~LnKWQW98jOOfs3KUeHgQwkpovz9XFp9edeWIxl~87~v2DxCu6EzBhPvI0anyfXmSfd9DD4Zns4Z4UXcxCr6AO8T8QI9jAyXeVSCXS9gLFguHfQBbijahTxWqX0A__"
                 alt=""
               />
-              <h2>Employee Management</h2>
+              <h2>HR Management System</h2>
             </div>
             <div className="header_body_right">
               <Space>
@@ -134,7 +134,7 @@ const Layouts = () => {
         <Content>
           <Layout>
             <Sider
-              collapsible
+              // collapsible
               collapsed={collapsed}
               onCollapse={(value) => setCollapsed(value)}
               theme="light"
@@ -147,8 +147,11 @@ const Layouts = () => {
                 items={items}
               />
             </Sider>
-            <Content style={{ padding: "0 24px", minHeight: 280 }}>
+            <Content style={{ minHeight: 280 }}>
               <Outlet />
+              <Footer style={{ textAlign: "center" }}>
+                Ant Design ©{new Date().getFullYear()} Created by Luu Duc Manh
+              </Footer>
             </Content>
           </Layout>
           <Modal
@@ -160,9 +163,6 @@ const Layouts = () => {
             <p>Are you sure you want to logout?</p>
           </Modal>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
       </Layout>
     </div>
   );

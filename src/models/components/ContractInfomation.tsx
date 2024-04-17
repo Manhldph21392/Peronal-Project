@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DatePicker, Form, Input, Select, Table } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
@@ -6,6 +6,8 @@ import { Button, message, Upload } from "antd";
 import { useAppDispatch, useAppSelector } from "../../stores/store";
 import { updateContractInfomation } from "../../slices/employe";
 import moment from "moment";
+import { useGetEmployeeByIdQuery } from "../../api/employee";
+import { useParams } from "react-router-dom";
 const props: UploadProps = {
   name: "file",
   action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
@@ -27,10 +29,19 @@ const props: UploadProps = {
 const ContractInfomation = () => {
   const dispatch: any = useAppDispatch();
   const { contractInfomation } = useAppSelector((state) => state.employee);
+  const { id } = useParams<{ id: string }>();
+  const { data: contractInfomationData } = useGetEmployeeByIdQuery(id || "");
+  
+  const [form] = Form.useForm();
 
+  useEffect(() => {
+    if (contractInfomationData) {
+      form.setFieldsValue(contractInfomationData);
+    }
+  }, [contractInfomationData]);
   const handleDateStartChange = (date: moment.Moment | null) => {
     if (date) {
-      const dateString = date.format("YYYY-MM-DD");
+      const dateString = moment(date).format("YYYY-MM-DD");
       dispatch(
         updateContractInfomation({
           ...contractInfomation,
@@ -49,7 +60,7 @@ const ContractInfomation = () => {
   };
   const handleContractDateFromChange = (date: moment.Moment | null) => {
     if (date) {
-      const dateString = date.format("YYYY-MM-DD");
+      const dateString = moment(date).format("YYYY-MM-DD");
       dispatch(
         updateContractInfomation({
           ...contractInfomation,
@@ -60,7 +71,7 @@ const ContractInfomation = () => {
   };
   const handleContractDateToChange = (date: moment.Moment | null) => {
     if (date) {
-      const dateString = date.format("YYYY-MM-DD");
+      const dateString = moment(date).format("YYYY-MM-DD");
       dispatch(
         updateContractInfomation({
           ...contractInfomation,
@@ -71,7 +82,7 @@ const ContractInfomation = () => {
   };
   const handleContractFromExtensionChange = (date: moment.Moment | null) => {
     if (date) {
-      const dateString = date.format("YYYY-MM-DD");
+      const dateString = moment(date).format("YYYY-MM-DD");
       dispatch(
         updateContractInfomation({
           ...contractInfomation,
@@ -82,7 +93,7 @@ const ContractInfomation = () => {
   };
   const handleContractToExtensionChange = (date: moment.Moment | null) => {
     if (date) {
-      const dateString = date.format("YYYY-MM-DD");
+      const dateString = moment(date).format("YYYY-MM-DD");
       dispatch(
         updateContractInfomation({
           ...contractInfomation,
@@ -93,7 +104,7 @@ const ContractInfomation = () => {
   };
   const handleContractDateChange = (date: moment.Moment | null) => {
     if (date) {
-      const dateString = date.format("YYYY-MM-DD");
+      const dateString = moment(date).format("YYYY-MM-DD");
       dispatch(
         updateContractInfomation({
           ...contractInfomation,
@@ -131,117 +142,127 @@ const ContractInfomation = () => {
   ];
   return (
     <div>
-      <div className="box_add">
-        <div className="header-form">
-          <h2 className="title">Contract Information</h2>
-          <div className="status_required">
-            Required (<span>*</span>)
-          </div>
-        </div>
-        <div className="contract_infomation">
-          <div className="short_line">
-            <Form.Item
-              label="Date start"
-              name="date_start"
-              rules={[
-                { required: true, message: "Please, date start is required!" },
-              ]}
-            >
-              <DatePicker
-                style={{ width: "100%" }}
-                onChange={handleDateStartChange}
-              />
-            </Form.Item>
-            <Form.Item
-              label="Employee type"
-              name="employee_type"
-              rules={[
-                {
-                  required: true,
-                  message: "Please, employee type is required!",
-                },
-              ]}
-            >
-              <Select
-                showSearch
-                placeholder="Select a employee type"
-                onChange={handleEmployeeTypeChange}
-                value={contractInfomation.type}
-                options={[
-                  {
-                    value: 0,
-                    label: "Permanent",
-                  },
-                  {
-                    value: 1,
-                    label: "Part time",
-                  },
-                  {
-                    value: 2,
-                    label: "Contract",
-                  },
-                ]}
-              />
-            </Form.Item>
-          </div>
-          <div className="contract">
-            <h3>Contract</h3>
-            <div className="long_line">
-              <Form.Item label="Contract Date From" name="contract_date_from">
-                <DatePicker
-                  style={{ width: "100%" }}
-                  onChange={handleContractDateFromChange}
-                />
-              </Form.Item>
-              <Form.Item label="To" name={"contract_date_to"}>
-                <DatePicker onChange={handleContractDateToChange} />
-              </Form.Item>
+      <Form form={form}>
+        <div className="box_add">
+          <div className="header-form">
+            <h2 className="title">Contract Information</h2>
+            <div className="status_required">
+              Required (<span>*</span>)
             </div>
           </div>
-          <div className="contract">
-            <h3>Extension Contract</h3>
-            <div className="long_line">
+          <div className="contract_infomation">
+            <div className="short_line">
               <Form.Item
-                label="Contract Date From"
-                name="contract_from_extension"
+                label="Date start"
+                name="contract_start_date"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please, date start is required!",
+                  },
+                ]}
               >
                 <DatePicker
                   style={{ width: "100%" }}
-                  onChange={handleContractFromExtensionChange}
+                  onChange={handleDateStartChange}
                 />
               </Form.Item>
-              <Form.Item label="To" name={"contract_to_extension"}>
-                <DatePicker onChange={handleContractToExtensionChange} />
+              <Form.Item
+                label="Employee type"
+                name="employee_type"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please, employee type is required!",
+                  },
+                ]}
+              >
+                <Select
+                  showSearch
+                  placeholder="Select a employee type"
+                  onChange={handleEmployeeTypeChange}
+                  value={contractInfomation.type}
+                  options={[
+                    {
+                      value: 0,
+                      label: "Permanent",
+                    },
+                    {
+                      value: 1,
+                      label: "Part time",
+                    },
+                    {
+                      value: 2,
+                      label: "Contract",
+                    },
+                  ]}
+                />
               </Form.Item>
             </div>
-          </div>
-          <div className="table_contract">
-            <div className="table_contract_title">
-              <h4>CONTRACT:</h4>
-            </div>
-            <p>Please upload pdf, png, xlsx, docx file format!</p>
-            <div className="table_contract_content">
-              <div className="content_left">
-                <Form.Item label="Contract Date" name={"contract_date"}>
-                  <DatePicker onChange={handleContractDateChange} />
+            <div className="contract">
+              <h3>Contract</h3>
+              <div className="long_line">
+                <Form.Item label="Contract Date From" name="contract_date_from">
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    onChange={handleContractDateFromChange}
+                  />
                 </Form.Item>
-                <Form.Item label="Contract Name" name={"contract_name"}>
-                  <Input onChange={handleContractNameChange} />
+                <Form.Item label="To" name={"contract_date_to"}>
+                  <DatePicker onChange={handleContractDateToChange} />
                 </Form.Item>
-                <div className="group_button">
-                  <Upload {...props}>
-                    <Button className="btn btn-upload" icon={<UploadOutlined />}>Upload file</Button>
-                  </Upload>
-                  <Button className="btn btn-add">Add</Button>
-                </div>
               </div>
-              <div className="content_right">
-                <Table dataSource={dataSource} columns={columns} />;
+            </div>
+            <div className="contract">
+              <h3>Extension Contract</h3>
+              <div className="long_line">
+                <Form.Item
+                  label="Contract Date From"
+                  name="contract_from_extension"
+                >
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    onChange={handleContractFromExtensionChange}
+                  />
+                </Form.Item>
+                <Form.Item label="To" name={"contract_to_extension"}>
+                  <DatePicker onChange={handleContractToExtensionChange} />
+                </Form.Item>
+              </div>
+            </div>
+            <div className="table_contract">
+              <div className="table_contract_title">
+                <h4>CONTRACT:</h4>
+              </div>
+              <p>Please upload pdf, png, xlsx, docx file format!</p>
+              <div className="table_contract_content">
+                <div className="content_left">
+                  <Form.Item label="Contract Date" name={"contract_date"}>
+                    <DatePicker onChange={handleContractDateChange} />
+                  </Form.Item>
+                  <Form.Item label="Contract Name" name={"contract_name"}>
+                    <Input onChange={handleContractNameChange} />
+                  </Form.Item>
+                  <div className="group_button">
+                    <Upload {...props}>
+                      <Button
+                        className="btn btn-upload"
+                        icon={<UploadOutlined />}
+                      >
+                        Upload file
+                      </Button>
+                    </Upload>
+                    <Button className="btn btn-add">Add</Button>
+                  </div>
+                </div>
+                <div className="content_right">
+                  <Table dataSource={dataSource} columns={columns} />;
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </Form>
     </div>
   );
 };

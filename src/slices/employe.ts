@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-interface IEmployeeInfomation {
+export interface IEmployeeInfomation {
     name: string,
     home_address_1: string,
     gender: number,
     id: string,
     mother_name: string,
-    dob: string,
+    dob?: string,
     pob: string,
-    ktp_no: string,
+    ktp_no: number,
     taxId: number,
     home_address_2: string,
     mobile_no: number,
@@ -26,7 +26,7 @@ interface IEmployeeInfomation {
     emergency_contract: string,
 
 }
-interface IContractInfomation {
+export interface IContractInfomation {
     contract_start_date: string,
     type: number,
     contract_date_from: string,
@@ -36,25 +36,25 @@ interface IContractInfomation {
     contract_date: string,
     contract_name: string,
 }
-interface IEmploymentDetails {
+export interface IEmploymentDetails {
     department_id: number,
     position_id: number,
     hidden_on_payroll: string
 }
-interface ISalaryWages {
+export interface ISalaryWages {
     salary: number,
     basic_audit: number,
     satefy_insurance: number,
     health_insurance: number,
     meal_allowance: number,
 }
-interface IOther {
+export interface IOther {
     grade: number,
     remark: string,
     benefits: [],
 }
 
-interface IInitialState {
+export interface IInitialState {
     employeeInfomation: IEmployeeInfomation,
     contractInfomation: IContractInfomation,
     employmentDetails: IEmploymentDetails,
@@ -75,6 +75,7 @@ export const employeeSlice = createSlice({
     reducers: {
         updateEmployeeInfomation: (state, action: PayloadAction<IEmployeeInfomation>) => {
             state.employeeInfomation = action.payload
+
         },
         updateContractInfomation: (state, action: PayloadAction<IContractInfomation>) => {
             state.contractInfomation = action.payload

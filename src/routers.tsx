@@ -30,7 +30,11 @@ export const router = createBrowserRouter([
         element: <PrivateRouter element={<TableNew />} />,
       },
       {
-        path: "add-employee",
+        path: "add-or-update-employee/:id",
+        element: <PrivateRouter element={<FormAddEmployee />} />,
+      },
+      {
+        path: "add-or-update-employee",
         element: <PrivateRouter element={<FormAddEmployee />} />,
       },
       {
@@ -39,15 +43,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  // {
-  //   path: "layouts",
-  //   element: <Layouts/>, children: [
-  //     {
-  //       index: true,
-  //       element: <PrivateRouter element={<TableNew />} />,
-  //     }
-  //   ]
-  // },
+
   {
     path: "/login",
     element: <LoginPage />,

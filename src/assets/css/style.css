@@ -22,6 +22,7 @@ a {
 /* table */
 .box_table {
     margin: 30px 46px 0px;
+    padding: 20px;
 }
 
 .box_table .ant-table-cell {
@@ -38,13 +39,15 @@ a {
 
 .action_table {
     text-align: right;
-    padding: 20px 10px;
+    padding: 20px 0 20px 0;
     background: #fff;
-    border-radius: 10px 10px 0 0;
 }
 
 .action_table button {
     margin: 0 5px;
+}
+.ant-table-thead th:first-child{
+    width: 30px;
 }
 
 .box_table .ant-table-content {
@@ -59,6 +62,7 @@ a {
     font-size: 36px;
     margin: 0;
     margin-bottom: 30px;
+    font-weight: 500;
 }
 
 .box_table .ant-table-content::-webkit-scrollbar {
@@ -337,4 +341,30 @@ a {
     height: 100%;
     outline: 0px;
     border-right: 1px solid rgba(193, 200, 205, 0.24);
+}
+
+.ant-layout-sider {
+    flex: 0 0 320px !important;
+    min-width: 320px !important;
+    max-width: 320px !important;
+}
+
+.ant-menu {
+    position: fixed;
+    top: 130px;
+    max-width: 300px;
+}
+
+.main_table {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.row_pagination .ant-pagination-options {
+    display: none;
+}
+.ant-table-cell {
+    padding: 5px !important;
+    font-size: 12px !important;
 }

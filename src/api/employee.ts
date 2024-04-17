@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IEmployee } from "../interfaces/Employee";
+import { IInitialState } from "../slices/employe";
 
 const employeeApi = createApi({
     reducerPath: "employeeApi",
@@ -15,11 +16,11 @@ const employeeApi = createApi({
     }),
     endpoints: (builder) => ({
         getEmployees: builder.query({
-            query: (args: { page: number, size: number }) => ({
-                url: `employee?page=${args.page}&size=${args.size}`,
+            query: (args: { page: number, size: number, search?: string }) => ({
+                url: `employee?page=${args.page}&size=${args.size}&search=${args.search || ""}`,
                 method: "GET",
             }),
-            transformResponse: (response: { data: IEmployee[] }) => {
+            transformResponse: (response: { data: IEmployee }) => {
                 return response.data
             },
         }),
@@ -28,7 +29,7 @@ const employeeApi = createApi({
                 url: `employee/${id}`,
                 method: "GET"
             }),
-            transformResponse: (response: { data: IEmployee[] }) => {
+            transformResponse: (response: { data: IEmployee }) => {
                 return response.data
             },
         }),
@@ -41,12 +42,12 @@ const employeeApi = createApi({
 
         }),
         updateEmployee: builder.mutation({
-            query: (employee) => ({
-                url: `employee/${employee.id}`,
+            query: (id) => ({
+                url: `employee/${id}`,
                 method: "PUT",
-                body: employee
+                body: id
             }),
-            transformResponse: (response: { data: IEmployee[] }) => {
+            transformResponse: (response: { data: IInitialState[] }) => {
                 return response.data
             },
         }),
@@ -56,7 +57,7 @@ const employeeApi = createApi({
                 method: "DELETE",
                 body: { record_ids: record_ids } // Truyền mảng record_ids[]
             }),
-            transformResponse: (response: { data: IEmployee[] }) => {
+            transformResponse: (response: { data: IEmployee }) => {
                 return response.data
             },
         }),

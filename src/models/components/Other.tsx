@@ -58,67 +58,69 @@ const Other = (props: Props) => {
     dispatch(updateOther({ ...other, grade: value }));
   };
   return (
-    <div className="box_add">
-      <div className="header-form">
-        <h2 className="title">Others</h2>
-      </div>
-      <div className="content_other">
-        <Form.Item label="Grade" name="grade">
-          <Select
-            style={{ width: "100%" }}
-            loading={isDepartmentsLoading}
-            options={gradeOptions}
-            value={other.grade}
-            onChange={handleGradeChange}
-          />
-        </Form.Item>
-        <Form.Item label="Benefit" name="benefit">
-          <div className="list_benefit">
-            <ul>
-              {benefitList.map((benefit, index) => (
-                <li key={index}>
-                  <div className="benefit_item">{benefit}</div>
-                  <div className="actions_benefit">
-                    <Button danger>
-                      <DeleteOutlined />
-                    </Button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <Button
+    <Form>
+      <div className="box_add">
+        <div className="header-form">
+          <h2 className="title">Others</h2>
+        </div>
+        <div className="content_other">
+          <Form.Item label="Grade" name="grade">
+            <Select
               style={{ width: "100%" }}
-              type="primary"
-              onClick={showModal}
-            >
-              Add Benefit
-            </Button>
-            <Modal
-              title="Add Benefit"
-              open={isModalOpen}
-              onOk={handleOk}
-              onCancel={handleCancel}
-            >
-              <Form.Item label="Name" name="benefit_name">
-                <Input style={{ width: "100%" }} placeholder="Name" />
-              </Form.Item>
-              <Form.Item label="Code" name="code">
-                <Input style={{ width: "100%" }} placeholder="Code" />
-              </Form.Item>
-              <Form.Item label="Type" name="type">
-                <Input style={{ width: "100%" }} placeholder="Type" />
-              </Form.Item>
-            </Modal>
-          </div>
-        </Form.Item>
-        <Form.Item label="Benefit(Photo)" name="benefit_photo">
-          <Button icon={<UploadOutlined />}>Click to Upload</Button>
-        </Form.Item>
-        <Form.Item label="Remark" name="remark">
-          <Input />
-        </Form.Item>
+              loading={isDepartmentsLoading}
+              options={gradeOptions}
+              value={other.grade}
+              onChange={handleGradeChange}
+            />
+          </Form.Item>
+          <Form.Item label="Benefit" name="benefit">
+            <div className="list_benefit">
+              <ul>
+                {benefitList.map((benefit, index) => (
+                  <li key={index}>
+                    <div className="benefit_item">{benefit}</div>
+                    <div className="actions_benefit">
+                      <Button danger>
+                        <DeleteOutlined />
+                      </Button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <Button
+                style={{ width: "100%" }}
+                type="primary"
+                onClick={showModal}
+              >
+                Add Benefit
+              </Button>
+              <Modal
+                title="Add Benefit"
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+              >
+                <Form.Item label="Name" name="benefit_name">
+                  <Input style={{ width: "100%" }} placeholder="Name" />
+                </Form.Item>
+                <Form.Item label="Code" name="code">
+                  <Input style={{ width: "100%" }} placeholder="Code" />
+                </Form.Item>
+                <Form.Item label="Type" name="type">
+                  <Input style={{ width: "100%" }} placeholder="Type" />
+                </Form.Item>
+              </Modal>
+            </div>
+          </Form.Item>
+          <Form.Item label="Benefit(Photo)" name="benefit_photo">
+            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          </Form.Item>
+          <Form.Item label="Remark" name="remark">
+            <Input />
+          </Form.Item>
+        </div>
       </div>
-    </div>
+    </Form>
   );
 };
 

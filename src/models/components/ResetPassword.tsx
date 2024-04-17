@@ -60,7 +60,7 @@ const ResetPassword = () => {
           </Form.Item>
           <Form.Item
             label="Confirm Password"
-            name="confirmPassword"
+            name="password_confirmation"
             dependencies={["password"]}
             rules={[
               { required: true, message: "Please confirm your new password!" },
