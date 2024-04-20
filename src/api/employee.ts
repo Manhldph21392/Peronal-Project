@@ -42,10 +42,10 @@ const employeeApi = createApi({
 
         }),
         updateEmployee: builder.mutation({
-            query: (id) => ({
-                url: `employee/${id}`,
+            query: (employee) => ({
+                url: `employee/${employee.id}`,
                 method: "PUT",
-                body: id
+                body:  employee
             }),
             transformResponse: (response: { data: IInitialState[] }) => {
                 return response.data

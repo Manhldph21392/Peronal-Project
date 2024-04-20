@@ -1,12 +1,11 @@
-import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import LoginPage from "./models/pages/LoginPage";
 import ChangePasswordPage from "./models/pages/ChangePasswordPage";
 import ForgotPasswordPage from "./models/pages/ForgotPasswordPage";
-import TableEmployee from "./models/components/TableEmployee";
 import ResetPassword from "./models/components/ResetPassword";
-import FormAddEmployee from "./models/components/FormAddEmployee";
-import TableNew from "./models/components/TableNew";
 import Layouts from "./layouts/Layout";
+import CreateAndUpdateEmployeePage from "./models/pages/CreateAndUpdateEmployeePage";
+import EmployeePage from "./models/pages/EmployeePage";
 
 const PrivateRouter = ({ element }: { element: React.ReactNode }) => {
   const token = localStorage.getItem("token");
@@ -27,15 +26,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "employee",
-        element: <PrivateRouter element={<TableNew />} />,
+        element: <PrivateRouter element={<EmployeePage />} />,
       },
       {
         path: "add-or-update-employee/:id",
-        element: <PrivateRouter element={<FormAddEmployee />} />,
+        element: <PrivateRouter element={<CreateAndUpdateEmployeePage />} />,
       },
       {
         path: "add-or-update-employee",
-        element: <PrivateRouter element={<FormAddEmployee />} />,
+        element: <PrivateRouter element={<CreateAndUpdateEmployeePage />} />,
       },
       {
         path: "change-password",

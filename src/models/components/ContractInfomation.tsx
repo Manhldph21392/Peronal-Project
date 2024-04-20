@@ -7,7 +7,6 @@ import { useAppDispatch, useAppSelector } from "../../stores/store";
 import { updateContractInfomation } from "../../slices/employe";
 import moment from "moment";
 import { useGetEmployeeByIdQuery } from "../../api/employee";
-import { useParams } from "react-router-dom";
 const props: UploadProps = {
   name: "file",
   action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
@@ -26,17 +25,17 @@ const props: UploadProps = {
   },
 };
 
-const ContractInfomation = () => {
+const ContractInfomation = ({ onUpdateContractInfo, id }: any) => {
   const dispatch: any = useAppDispatch();
   const { contractInfomation } = useAppSelector((state) => state.employee);
-  const { id } = useParams<{ id: string }>();
   const { data: contractInfomationData } = useGetEmployeeByIdQuery(id || "");
-  
+
   const [form] = Form.useForm();
 
   useEffect(() => {
     if (contractInfomationData) {
       form.setFieldsValue(contractInfomationData);
+      onUpdateContractInfo(contractInfomationData);
     }
   }, [contractInfomationData]);
   const handleDateStartChange = (date: moment.Moment | null) => {
@@ -58,6 +57,7 @@ const ContractInfomation = () => {
       })
     );
   };
+
   const handleContractDateFromChange = (date: moment.Moment | null) => {
     if (date) {
       const dateString = moment(date).format("YYYY-MM-DD");
@@ -142,7 +142,7 @@ const ContractInfomation = () => {
   ];
   return (
     <div>
-      <Form form={form}>
+      <Form form={form} onFinish={onUpdateContractInfo}>
         <div className="box_add">
           <div className="header-form">
             <h2 className="title">Contract Information</h2>
@@ -154,7 +154,7 @@ const ContractInfomation = () => {
             <div className="short_line">
               <Form.Item
                 label="Date start"
-                name="contract_start_date"
+                name="dateStart"
                 rules={[
                   {
                     required: true,
@@ -182,6 +182,7 @@ const ContractInfomation = () => {
                   placeholder="Select a employee type"
                   onChange={handleEmployeeTypeChange}
                   value={contractInfomation.type}
+                  defaultValue={contractInfomationData?.type}
                   options={[
                     {
                       value: 0,

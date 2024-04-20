@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Tabs, message } from "antd";
-import { Button, Form } from "antd";
+import { Button } from "antd";
 import { useAppSelector } from "../../stores/store";
 
 import EmployeeInfomation from "./EmployeeInfomation";
@@ -26,10 +26,28 @@ const FormAddEmployee = () => {
   const { id } = useParams<{ id?: string }>();
   const hasId = !!id;
   const [employeeInfoData, setEmployeeInfoData] = useState<IEmployee>();
+  const [contractInfoData, setContractInfoData] = useState<IEmployee>();
+  const [employmentDetailsData, setEmploymentDetailsData] =
+    useState<IEmployee>();
+  const [salaryWagesData, setSalaryWagesData] = useState<IEmployee>();
+  const [otherData, setOtherData] = useState<IEmployee>();
 
+  console.log(employeeInfoData?.name);
 
   const updateEmployeeInfoData = (data: IEmployee) => {
     setEmployeeInfoData(data);
+  };
+  const updateContractInfoData = (data: IEmployee) => {
+    setContractInfoData(data);
+  };
+  const updateEmploymentDetailsData = (data: IEmployee) => {
+    setEmploymentDetailsData(data);
+  };
+  const updateSalaryWagesData = (data: IEmployee) => {
+    setSalaryWagesData(data);
+  };
+  const updateOtherData = (data: IEmployee) => {
+    setOtherData(data);
   };
   // Lấy dữ liệu từ Redux store
   const employeeInfomation = useAppSelector(
@@ -48,44 +66,58 @@ const FormAddEmployee = () => {
     setActiveTab(key);
   };
 
-const handleAddEmployee = async () => {
-  try {
-    await createEmployee({
-      ...employeeInfomation,
-      ...contractInfomation,
-      ...employmentDetails,
-      ...salaryWages,
-      ...other,
-    });
-    navigate("/employee");
-    message.success("Add employee successfully");
-  } catch (error) {
-    message.error("Failed to add employee. Please try again later");
-  }
-};
+  const handleAddEmployee = async () => {
+    try {
+      await createEmployee({
+        ...employeeInfomation,
+        ...contractInfomation,
+        ...employmentDetails,
+        ...salaryWages,
+        ...other,
+        dob: employeeInfomation.dob,
+        contract_start_date: contractInfomation.contract_start_date,
+      });
+      navigate("/employee");
+      message.success("Add employee successfully");
+    } catch (error) {
+      message.error("Failed to add employee. Please try again later");
+    }
+  };
 
-const handleUpdateEmployee = async () => {
-  try {
-    await updateEmployee({
-      ...employeeInfoData,
-    });
-    navigate("/employee");
-    message.success("Update employee successfully");
-  } catch (error) {
-    message.error("Failed to update employee. Please try again later");
-  }
-};
+  const handleUpdateEmployee = async () => {
+    try {
+      const dataEdit = {
+        ...employeeInfoData,
+        ...contractInfoData,
+        ...employmentDetailsData,
+        ...salaryWagesData,
+        ...otherData,
+        id,
+        dob: employeeInfomation.dob,
+        contract_start_date: contractInfomation.contract_start_date,
+      }
+      console.log(dataEdit);
+      
+      // await updateEmployee(
+      //   dataEdit
+      // );
+      // navigate("/employee");
 
+      // message.success("Update employee successfully");
+    } catch (error) {
+      message.error("Failed to update employee. Please try again later");
+    }
+  };
 
-const handleButtonClick = async () => {
-  if (hasId) {
-    // Nếu có ID, thực hiện cập nhật
-    await handleUpdateEmployee();
-  } else {
-    // Nếu không có ID, thực hiện thêm mới
-    await handleAddEmployee();
-  }
-};
+  const handleButtonClick = async () => {
+    if (hasId) {
+      // Nếu có ID, thực hiện cập nhật
+      await handleUpdateEmployee();
+    } else {
+      // Nếu không có ID, thực hiện thêm mới
+      await handleAddEmployee();
+    }
+  };
   return (
     <div>
       <div className="title_page">
@@ -96,7 +128,7 @@ const handleButtonClick = async () => {
             onClick={handleButtonClick}
             disabled={isCreatingEmployee}
           >
-            {isCreatingEmployee ? "Updating..." : "Update"}
+            {isCreatingEmployee ? "Updating..." : "Save Change"}
           </Button>
         ) : (
           <Button
@@ -111,19 +143,29 @@ const handleButtonClick = async () => {
       <div className="box_tabs">
         <Tabs activeKey={activeTab} onChange={handleTabChange}>
           <TabPane tab="Employee Information" key="1">
-            <EmployeeInfomation onUpdateEmployeeInfo={updateEmployeeInfoData} id = {id} />
+            <EmployeeInfomation
+            employeeInfoData={employeeInfoData}
+              onUpdateEmployeeInfo={updateEmployeeInfoData}
+              id={id}
+            />
           </TabPane>
           <TabPane tab="Contract Information" key="2">
-            <ContractInfomation />
+            <ContractInfomation
+              onUpdateContractInfo={updateContractInfoData}
+              id={id}
+            />
           </TabPane>
           <TabPane tab="Employment Details" key="3">
-            <EmploymentDetails />
+            <EmploymentDetails
+              onUpdateEmploymentDetails={updateEmploymentDetailsData}
+              id={id}
+            />
           </TabPane>
           <TabPane tab="Salary & Wages" key="4">
-            <SalaryWages />
+            <SalaryWages id={id} onUpdateSalaryWages={updateSalaryWagesData} />
           </TabPane>
           <TabPane tab="Others" key="5">
-            <Other />
+            <Other id={id} onUpdateOther={updateOtherData} />
           </TabPane>
         </Tabs>
       </div>
@@ -131,4 +173,4 @@ const handleButtonClick = async () => {
   );
 };
 
-  export default FormAddEmployee;
+export default FormAddEmployee;

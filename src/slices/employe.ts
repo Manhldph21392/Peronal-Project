@@ -42,11 +42,11 @@ export interface IEmploymentDetails {
     hidden_on_payroll: string
 }
 export interface ISalaryWages {
-    salary: number,
-    basic_audit: number,
-    satefy_insurance: number,
-    health_insurance: number,
-    meal_allowance: number,
+    salary: number | null,
+    basic_audit: number | null,
+    satefy_insurance: number | null,
+    health_insurance: number | null,
+    meal_allowance: number | null,
 }
 export interface IOther {
     grade: number,

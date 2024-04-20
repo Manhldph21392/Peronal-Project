@@ -1,13 +1,15 @@
 import { Button, Form, Input, Select, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { DeleteOutlined, UploadOutlined } from "@ant-design/icons";
-import { useGetDepartmentsQuery, useGetBenefitQuery } from "../../api/employee";
+import {
+  useGetDepartmentsQuery,
+  useGetBenefitQuery,
+  useGetEmployeeByIdQuery,
+} from "../../api/employee";
 import { useAppDispatch, useAppSelector } from "../../stores/store";
 import { updateOther } from "../../slices/employe";
 
-type Props = {};
-
-const Other = (props: Props) => {
+const Other = ({ onUpdateOther, id }: any) => {
   const { data: departments, isLoading: isDepartmentsLoading } =
     useGetDepartmentsQuery({});
   const { data: benefits, isLoading: isBenefitsLoading } = useGetBenefitQuery(
@@ -18,6 +20,14 @@ const Other = (props: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const { other } = useAppSelector((state) => state.employee);
+  const { data: otherData } = useGetEmployeeByIdQuery(id || "");
+  const [form] = Form.useForm();
+  
+  useEffect(() => {
+    if (otherData) {
+      form.setFieldsValue(otherData);
+    }
+  })
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -58,7 +68,7 @@ const Other = (props: Props) => {
     dispatch(updateOther({ ...other, grade: value }));
   };
   return (
-    <Form>
+    <Form form={form} onFinish={onUpdateOther}>
       <div className="box_add">
         <div className="header-form">
           <h2 className="title">Others</h2>
@@ -73,45 +83,47 @@ const Other = (props: Props) => {
               onChange={handleGradeChange}
             />
           </Form.Item>
-          <Form.Item label="Benefit" name="benefit">
-            <div className="list_benefit">
-              <ul>
-                {benefitList.map((benefit, index) => (
-                  <li key={index}>
-                    <div className="benefit_item">{benefit}</div>
-                    <div className="actions_benefit">
-                      <Button danger>
-                        <DeleteOutlined />
-                      </Button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <Button
-                style={{ width: "100%" }}
-                type="primary"
-                onClick={showModal}
-              >
-                Add Benefit
-              </Button>
-              <Modal
-                title="Add Benefit"
-                open={isModalOpen}
-                onOk={handleOk}
-                onCancel={handleCancel}
-              >
-                <Form.Item label="Name" name="benefit_name">
-                  <Input style={{ width: "100%" }} placeholder="Name" />
-                </Form.Item>
-                <Form.Item label="Code" name="code">
-                  <Input style={{ width: "100%" }} placeholder="Code" />
-                </Form.Item>
-                <Form.Item label="Type" name="type">
-                  <Input style={{ width: "100%" }} placeholder="Type" />
-                </Form.Item>
-              </Modal>
-            </div>
-          </Form.Item>
+          <div className="box_list_benefit">
+            <Form.Item label="Benefit" name="benefit">
+              <div className="list_benefit">
+                <ul>
+                  {benefitList.map((benefit, index) => (
+                    <li key={index}>
+                      <div className="benefit_item">{benefit}</div>
+                      <div className="actions_benefit">
+                        <Button danger>
+                          <DeleteOutlined />
+                        </Button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <Button
+                  style={{ width: "100%" }}
+                  type="primary"
+                  onClick={showModal}
+                >
+                  Add Benefit
+                </Button>
+                <Modal
+                  title="Add Benefit"
+                  open={isModalOpen}
+                  onOk={handleOk}
+                  onCancel={handleCancel}
+                >
+                  <Form.Item label="Name" name="benefit_name">
+                    <Input style={{ width: "100%" }} placeholder="Name" />
+                  </Form.Item>
+                  <Form.Item label="Code" name="code">
+                    <Input style={{ width: "100%" }} placeholder="Code" />
+                  </Form.Item>
+                  <Form.Item label="Type" name="type">
+                    <Input style={{ width: "100%" }} placeholder="Type" />
+                  </Form.Item>
+                </Modal>
+              </div>
+            </Form.Item>
+          </div>
           <Form.Item label="Benefit(Photo)" name="benefit_photo">
             <Button icon={<UploadOutlined />}>Click to Upload</Button>
           </Form.Item>

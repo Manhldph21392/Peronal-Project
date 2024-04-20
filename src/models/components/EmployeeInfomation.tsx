@@ -1,6 +1,5 @@
 import { Form, DatePicker, Input, Select } from "antd";
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
 
 import { updateEmployeeInfomation } from "../../slices/employe";
 import { useAppDispatch, useAppSelector } from "../../stores/store";
@@ -8,11 +7,10 @@ import {
   useGetEmployeeByIdQuery,
   useGetMarriageQuery,
 } from "../../api/employee";
-const EmployeeInfomation = ({ onUpdateEmployeeInfo }: any) => {
+const EmployeeInfomation = ({ onUpdateEmployeeInfo, id, employeeInfoData }: any) => {
   const { employeeInfomation } = useAppSelector((state) => state.employee);
   const { data: marriages = [] } = useGetMarriageQuery({});
   const dispatch = useAppDispatch();
-  const { id } = useParams<{ id: string }>();
   const [form] = Form.useForm();
   const { data: employeeInfomationData } = useGetEmployeeByIdQuery(id || "");
   const formatDate = "YYYY-MM-DD";
@@ -24,9 +22,7 @@ const EmployeeInfomation = ({ onUpdateEmployeeInfo }: any) => {
   }, [employeeInfomationData]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      updateEmployeeInfomation({ ...employeeInfomation, name: e.target.value })
-    );
+    onUpdateEmployeeInfo({...employeeInfoData, name: e.target.value});
   };
   const handleGenderChange = (value: number) => {
     dispatch(
@@ -243,9 +239,10 @@ const EmployeeInfomation = ({ onUpdateEmployeeInfo }: any) => {
       })
     );
   };
+ 
   return (
     <div>
-      <Form form={form}>
+      <Form form={form} onFinish={onUpdateEmployeeInfo}>
         <div className="box_add">
           <div className="header-form">
             <h2 className="title">Personal Information</h2>
@@ -307,7 +304,7 @@ const EmployeeInfomation = ({ onUpdateEmployeeInfo }: any) => {
 
               <Form.Item
                 label="Date of birth"
-                name="dob"
+                name="dateOfBirth"
                 rules={[
                   {
                     required: true,
@@ -315,11 +312,11 @@ const EmployeeInfomation = ({ onUpdateEmployeeInfo }: any) => {
                   },
                 ]}
               >
-                {/* <DatePicker
+                <DatePicker
                   format={formatDate}
                   onChange={handleDateofBirthChange}
-                  value={employeeInfomation.dob}
-                /> */}
+                  value={employeeInfomationData?.dob}
+                />
               </Form.Item>
 
               <Form.Item
