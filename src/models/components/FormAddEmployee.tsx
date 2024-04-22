@@ -24,14 +24,6 @@ const FormAddEmployee = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id?: string }>();
   const hasId = !!id;
-  const [employeeInfo, setEmployeeInfo] = useState<any>({});
-  const [contractInfoData, setContractInfoData] = useState<any>({});
-  const handleEmployeeInfoUpdate = (values: any) => {
-    setEmployeeInfo(values);
-  };
-  const handleContractInfoUpdate = (values: any) => {
-    setContractInfoData(values);
-  };
 
   // Lấy dữ liệu từ Redux store
   const employeeInfomation = useAppSelector(
@@ -70,8 +62,11 @@ const FormAddEmployee = () => {
 
   const handleUpdateEmployee = async () => {
     await updateEmployee({
-      ...employeeInfo,
-
+      ...employeeInfomation,
+      ...contractInfomation,
+      ...employmentDetails,
+      ...salaryWages,
+      ...other,
       dob: employeeInfomation.dob,
       contract_start_date: contractInfomation.contract_start_date,
       id,
@@ -114,18 +109,10 @@ const FormAddEmployee = () => {
         <Form>
           <Tabs activeKey={activeTab} onChange={handleTabChange}>
             <TabPane tab="Employee Information" key="1">
-              <EmployeeInfomation
-                id={id}
-                initialValues={employeeInfomation}
-                onUpdate={handleEmployeeInfoUpdate}
-              />
+              <EmployeeInfomation id={id} />
             </TabPane>
             <TabPane tab="Contract Information" key="2">
-              <ContractInfomation
-                id={id}
-                initialValues={contractInfomation}
-                onUpdate={handleContractInfoUpdate}
-              />
+              <ContractInfomation id={id} />
             </TabPane>
             <TabPane tab="Employment Details" key="3">
               <EmploymentDetails id={id} />

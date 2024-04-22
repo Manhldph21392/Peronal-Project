@@ -4,7 +4,10 @@ import { UploadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
 import { Button, message, Upload } from "antd";
 import { useAppDispatch, useAppSelector } from "../../stores/store";
-import { updateContractInfomation } from "../../slices/employe";
+import {
+  IContractInfomation,
+  updateContractInfomation,
+} from "../../slices/employe";
 import moment from "moment";
 import { useGetEmployeeByIdQuery } from "../../api/employee";
 const props: UploadProps = {
@@ -25,21 +28,41 @@ const props: UploadProps = {
   },
 };
 
-const ContractInfomation = ({ id, onUpdate,initialValues }: any) => {
+const ContractInfomation = ({ id }: any) => {
   const dispatch: any = useAppDispatch();
   const { contractInfomation } = useAppSelector((state) => state.employee);
   const { data: contractInfomationData } = useGetEmployeeByIdQuery(id || "");
 
   const [form] = Form.useForm();
 
-  const handleContractChange = (changedValues: any, allValues: any) => {
-    onUpdate(allValues);
-  };
   useEffect(() => {
-    
-      form.setFieldsValue(initialValues);
-    
-  }, [initialValues]);
+    if (contractInfomationData) {
+      const {
+        contract_start_date,
+        type,
+        contract_date_from,
+        contract_date_to,
+        contract_from_extension,
+        contract_to_extension,
+        contract_date,
+        contract_name,
+      } = contractInfomationData;
+
+      const contracInfoData: IContractInfomation = {
+        contract_start_date,
+        type,
+        contract_date_from,
+        contract_date_to,
+        contract_from_extension,
+        contract_to_extension,
+        contract_date,
+        contract_name,
+      };
+
+      form.setFieldsValue(contracInfoData);
+      dispatch(updateContractInfomation(contracInfoData));
+    }
+  }, [contractInfomationData]);
   const handleDateStartChange = (date: moment.Moment | null) => {
     if (date) {
       const dateString = moment(date).format("YYYY-MM-DD");

@@ -6,7 +6,10 @@ import {
   useGetEmployeeByIdQuery,
   useGetPositionQuery,
 } from "../../api/employee";
-import { updateEmploymentDetails } from "../../slices/employe";
+import {
+  IEmploymentDetails,
+  updateEmploymentDetails,
+} from "../../slices/employe";
 
 const EmploymentDetails = ({ id }: any) => {
   const { data: departments, isLoading: isDepartmentsLoading } =
@@ -18,8 +21,14 @@ const EmploymentDetails = ({ id }: any) => {
 
   useEffect(() => {
     if (employmenData) {
-      form.setFieldsValue(employmenData);
-      dispatch(updateEmploymentDetails(employmenData));
+      const { department_id, position_id, hidden_on_payroll } = employmenData;
+      const employmentData: IEmploymentDetails = {
+        department_id,
+        position_id,
+        hidden_on_payroll,
+      };
+      form.setFieldsValue(employmentData);
+      dispatch(updateEmploymentDetails(employmentData));
     }
   }, [employmenData]);
   const dispatch = useAppDispatch();
@@ -51,7 +60,7 @@ const EmploymentDetails = ({ id }: any) => {
     );
   };
   return (
-    <Form form={form} >
+    <Form form={form}>
       <div className="box_add">
         <div className="header-form">
           <h2 className="title">Employment Details</h2>
