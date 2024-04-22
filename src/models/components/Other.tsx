@@ -9,7 +9,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../stores/store";
 import { updateOther } from "../../slices/employe";
 
-const Other = ({ onUpdateOther, id }: any) => {
+const Other = ({  id }: any) => {
   const { data: departments, isLoading: isDepartmentsLoading } =
     useGetDepartmentsQuery({});
   const { data: benefits, isLoading: isBenefitsLoading } = useGetBenefitQuery(
@@ -68,7 +68,7 @@ const Other = ({ onUpdateOther, id }: any) => {
     dispatch(updateOther({ ...other, grade: value }));
   };
   return (
-    <Form form={form} onFinish={onUpdateOther}>
+    <Form form={form} >
       <div className="box_add">
         <div className="header-form">
           <h2 className="title">Others</h2>

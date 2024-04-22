@@ -25,19 +25,21 @@ const props: UploadProps = {
   },
 };
 
-const ContractInfomation = ({ onUpdateContractInfo, id }: any) => {
+const ContractInfomation = ({ id, onUpdate,initialValues }: any) => {
   const dispatch: any = useAppDispatch();
   const { contractInfomation } = useAppSelector((state) => state.employee);
   const { data: contractInfomationData } = useGetEmployeeByIdQuery(id || "");
 
   const [form] = Form.useForm();
 
+  const handleContractChange = (changedValues: any, allValues: any) => {
+    onUpdate(allValues);
+  };
   useEffect(() => {
-    if (contractInfomationData) {
-      form.setFieldsValue(contractInfomationData);
-      onUpdateContractInfo(contractInfomationData);
-    }
-  }, [contractInfomationData]);
+    
+      form.setFieldsValue(initialValues);
+    
+  }, [initialValues]);
   const handleDateStartChange = (date: moment.Moment | null) => {
     if (date) {
       const dateString = moment(date).format("YYYY-MM-DD");
@@ -142,7 +144,7 @@ const ContractInfomation = ({ onUpdateContractInfo, id }: any) => {
   ];
   return (
     <div>
-      <Form form={form} onFinish={onUpdateContractInfo}>
+      <Form form={form}>
         <div className="box_add">
           <div className="header-form">
             <h2 className="title">Contract Information</h2>

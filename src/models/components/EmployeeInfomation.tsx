@@ -7,22 +7,24 @@ import {
   useGetEmployeeByIdQuery,
   useGetMarriageQuery,
 } from "../../api/employee";
-const EmployeeInfomation = ({ onUpdateEmployeeInfo, id, employeeInfoData }: any) => {
+const EmployeeInfomation = ({ initialValues, onUpdate, id }: any) => {
   const { employeeInfomation } = useAppSelector((state) => state.employee);
   const { data: marriages = [] } = useGetMarriageQuery({});
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
   const { data: employeeInfomationData } = useGetEmployeeByIdQuery(id || "");
   const formatDate = "YYYY-MM-DD";
+  const handleFormChange = (changedValues: any, allValues: any) => {
+    onUpdate(allValues);
+  };
   useEffect(() => {
-    if (employeeInfomationData) {
-      form.setFieldsValue(employeeInfomationData);
-      onUpdateEmployeeInfo(employeeInfomationData);
-    }
-  }, [employeeInfomationData]);
+    form.setFieldsValue(initialValues);
+  }, [initialValues]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onUpdateEmployeeInfo({...employeeInfoData, name: e.target.value});
+    dispatch(
+      updateEmployeeInfomation({ ...employeeInfomation, name: e.target.value })
+    );
   };
   const handleGenderChange = (value: number) => {
     dispatch(
@@ -239,10 +241,10 @@ const EmployeeInfomation = ({ onUpdateEmployeeInfo, id, employeeInfoData }: any)
       })
     );
   };
- 
+
   return (
     <div>
-      <Form form={form} onFinish={onUpdateEmployeeInfo}>
+      <Form form={form} initialValues={initialValues} onValuesChange={handleFormChange}>
         <div className="box_add">
           <div className="header-form">
             <h2 className="title">Personal Information</h2>

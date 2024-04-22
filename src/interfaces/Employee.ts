@@ -48,5 +48,7 @@ export interface IEmployee {
     contract_from_extension: string,
     contract_to_extension: string,
     contract_name: string,
-    contract_date: string
+    contract_date: string,
+    hidden_on_payroll: string,
+    position_id: number
 }

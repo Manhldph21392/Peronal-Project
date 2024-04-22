@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Tabs, message } from "antd";
+import { Form, Tabs, message } from "antd";
 import { Button } from "antd";
 import { useAppSelector } from "../../stores/store";
 
@@ -13,7 +13,6 @@ import {
   useUpdateEmployeeMutation,
 } from "../../api/employee";
 import { useNavigate, useParams } from "react-router-dom";
-import { IEmployee } from "../../interfaces/Employee";
 
 const { TabPane } = Tabs;
 
@@ -25,30 +24,15 @@ const FormAddEmployee = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id?: string }>();
   const hasId = !!id;
-  const [employeeInfoData, setEmployeeInfoData] = useState<IEmployee>();
-  const [contractInfoData, setContractInfoData] = useState<IEmployee>();
-  const [employmentDetailsData, setEmploymentDetailsData] =
-    useState<IEmployee>();
-  const [salaryWagesData, setSalaryWagesData] = useState<IEmployee>();
-  const [otherData, setOtherData] = useState<IEmployee>();
+  const [employeeInfo, setEmployeeInfo] = useState<any>({});
+  const [contractInfoData, setContractInfoData] = useState<any>({});
+  const handleEmployeeInfoUpdate = (values: any) => {
+    setEmployeeInfo(values);
+  };
+  const handleContractInfoUpdate = (values: any) => {
+    setContractInfoData(values);
+  };
 
-  console.log(employeeInfoData?.name);
-
-  const updateEmployeeInfoData = (data: IEmployee) => {
-    setEmployeeInfoData(data);
-  };
-  const updateContractInfoData = (data: IEmployee) => {
-    setContractInfoData(data);
-  };
-  const updateEmploymentDetailsData = (data: IEmployee) => {
-    setEmploymentDetailsData(data);
-  };
-  const updateSalaryWagesData = (data: IEmployee) => {
-    setSalaryWagesData(data);
-  };
-  const updateOtherData = (data: IEmployee) => {
-    setOtherData(data);
-  };
   // Lấy dữ liệu từ Redux store
   const employeeInfomation = useAppSelector(
     (state) => state.employee.employeeInfomation
@@ -85,28 +69,14 @@ const FormAddEmployee = () => {
   };
 
   const handleUpdateEmployee = async () => {
-    try {
-      const dataEdit = {
-        ...employeeInfoData,
-        ...contractInfoData,
-        ...employmentDetailsData,
-        ...salaryWagesData,
-        ...otherData,
-        id,
-        dob: employeeInfomation.dob,
-        contract_start_date: contractInfomation.contract_start_date,
-      }
-      console.log(dataEdit);
-      
-      // await updateEmployee(
-      //   dataEdit
-      // );
-      // navigate("/employee");
+    await updateEmployee({
+      ...employeeInfo,
 
-      // message.success("Update employee successfully");
-    } catch (error) {
-      message.error("Failed to update employee. Please try again later");
-    }
+      dob: employeeInfomation.dob,
+      contract_start_date: contractInfomation.contract_start_date,
+      id,
+    });
+    navigate("/employee");
   };
 
   const handleButtonClick = async () => {
@@ -141,33 +111,33 @@ const FormAddEmployee = () => {
         )}
       </div>
       <div className="box_tabs">
-        <Tabs activeKey={activeTab} onChange={handleTabChange}>
-          <TabPane tab="Employee Information" key="1">
-            <EmployeeInfomation
-            employeeInfoData={employeeInfoData}
-              onUpdateEmployeeInfo={updateEmployeeInfoData}
-              id={id}
-            />
-          </TabPane>
-          <TabPane tab="Contract Information" key="2">
-            <ContractInfomation
-              onUpdateContractInfo={updateContractInfoData}
-              id={id}
-            />
-          </TabPane>
-          <TabPane tab="Employment Details" key="3">
-            <EmploymentDetails
-              onUpdateEmploymentDetails={updateEmploymentDetailsData}
-              id={id}
-            />
-          </TabPane>
-          <TabPane tab="Salary & Wages" key="4">
-            <SalaryWages id={id} onUpdateSalaryWages={updateSalaryWagesData} />
-          </TabPane>
-          <TabPane tab="Others" key="5">
-            <Other id={id} onUpdateOther={updateOtherData} />
-          </TabPane>
-        </Tabs>
+        <Form>
+          <Tabs activeKey={activeTab} onChange={handleTabChange}>
+            <TabPane tab="Employee Information" key="1">
+              <EmployeeInfomation
+                id={id}
+                initialValues={employeeInfomation}
+                onUpdate={handleEmployeeInfoUpdate}
+              />
+            </TabPane>
+            <TabPane tab="Contract Information" key="2">
+              <ContractInfomation
+                id={id}
+                initialValues={contractInfomation}
+                onUpdate={handleContractInfoUpdate}
+              />
+            </TabPane>
+            <TabPane tab="Employment Details" key="3">
+              <EmploymentDetails id={id} />
+            </TabPane>
+            <TabPane tab="Salary & Wages" key="4">
+              <SalaryWages id={id} />
+            </TabPane>
+            <TabPane tab="Others" key="5">
+              <Other id={id} />
+            </TabPane>
+          </Tabs>
+        </Form>
       </div>
     </div>
   );
