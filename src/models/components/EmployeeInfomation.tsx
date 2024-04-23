@@ -1,13 +1,17 @@
 import { Form, DatePicker, Input, Select } from "antd";
 import React, { useEffect } from "react";
 
-import { updateEmployeeInfomation } from "../../slices/employe";
+import {
+  IEmployeeInfomation,
+  updateEmployeeInfomation,
+} from "../../slices/employe";
 import { useAppDispatch, useAppSelector } from "../../stores/store";
 import {
   useGetEmployeeByIdQuery,
   useGetMarriageQuery,
 } from "../../api/employee";
-const EmployeeInfomation = ({ onUpdateEmployeeInfo, id, employeeInfoData }: any) => {
+import moment from "moment";
+const EmployeeInfomation = ({ id }: any) => {
   const { employeeInfomation } = useAppSelector((state) => state.employee);
   const { data: marriages = [] } = useGetMarriageQuery({});
   const dispatch = useAppDispatch();
@@ -16,15 +20,70 @@ const EmployeeInfomation = ({ onUpdateEmployeeInfo, id, employeeInfoData }: any)
   const formatDate = "YYYY-MM-DD";
   useEffect(() => {
     if (employeeInfomationData) {
-      form.setFieldsValue(employeeInfomationData);
-      onUpdateEmployeeInfo(employeeInfomationData);
+      const {
+        name,
+        home_address_1,
+        gender,
+        id,
+        mother_name,
+        dob,
+        pob,
+        ktp_no,
+        taxId,
+        home_address_2,
+        mobile_no,
+        tel_no,
+        marriage_id,
+        bank_account_no,
+        card_number,
+        bank_name,
+        family_card_number,
+        safety_insurance_no,
+        health_insurance_no,
+        education_background,
+        emergency_name,
+        emergency_relationship,
+        emergency_contract,
+      } = employeeInfomationData;
+
+      const employeeData: IEmployeeInfomation = {
+        name,
+        home_address_1,
+        gender,
+        id,
+        mother_name,
+        dob,
+        pob,
+        ktp_no,
+        taxId,
+        home_address_2,
+        mobile_no,
+        tel_no,
+        marriage_id,
+        bank_account_no,
+        card_number,
+        bank_name,
+        family_card_number,
+        safety_insurance_no,
+        health_insurance_no,
+        education_background,
+        emergency_name,
+        emergency_relationship,
+        emergency_contract,
+      };
+
+      form.setFieldsValue(employeeData);
+      form.setFieldValue("dob", moment(dob, formatDate));
+      dispatch(updateEmployeeInfomation(employeeData));
     }
   }, [employeeInfomationData]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onUpdateEmployeeInfo({...employeeInfoData, name: e.target.value});
+    dispatch(
+      updateEmployeeInfomation({ ...employeeInfomation, name: e.target.value })
+    );
   };
-  const handleGenderChange = (value: number) => {
+  const handleGenderChange = (value: number | string) => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
@@ -239,10 +298,10 @@ const EmployeeInfomation = ({ onUpdateEmployeeInfo, id, employeeInfoData }: any)
       })
     );
   };
- 
+
   return (
     <div>
-      <Form form={form} onFinish={onUpdateEmployeeInfo}>
+      <Form form={form}>
         <div className="box_add">
           <div className="header-form">
             <h2 className="title">Personal Information</h2>
@@ -304,7 +363,7 @@ const EmployeeInfomation = ({ onUpdateEmployeeInfo, id, employeeInfoData }: any)
 
               <Form.Item
                 label="Date of birth"
-                name="dateOfBirth"
+                name="dob"
                 rules={[
                   {
                     required: true,
@@ -315,7 +374,6 @@ const EmployeeInfomation = ({ onUpdateEmployeeInfo, id, employeeInfoData }: any)
                 <DatePicker
                   format={formatDate}
                   onChange={handleDateofBirthChange}
-                  value={employeeInfomationData?.dob}
                 />
               </Form.Item>
 

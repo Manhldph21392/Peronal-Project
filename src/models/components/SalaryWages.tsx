@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../stores/store";
 import { updateSalaryWages } from "../../slices/employe";
 import { useGetEmployeeByIdQuery } from "../../api/employee";
 
-const SalaryWages = ({ onUpdateSalaryWages ,id }: any) => {
+const SalaryWages = ({ id }: any) => {
   const dispatch = useAppDispatch();
   const { salaryWages } = useAppSelector((state) => state.employee);
   const [form] = Form.useForm();
@@ -48,7 +48,7 @@ const SalaryWages = ({ onUpdateSalaryWages ,id }: any) => {
     );
   };
   return (
-    <Form form={form} onFinish={ onUpdateSalaryWages}>
+    <Form form={form} >
       <div className="box_add">
         <div className="header-form">
           <h2 className="title">Salary & Wages</h2>

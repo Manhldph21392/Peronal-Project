@@ -1,6 +1,6 @@
-import { Button, Form, Input, Select, Modal } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import React, { useEffect, useState } from "react";
-import { DeleteOutlined, UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 import {
   useGetDepartmentsQuery,
   useGetBenefitQuery,
@@ -9,7 +9,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../stores/store";
 import { updateOther } from "../../slices/employe";
 
-const Other = ({ onUpdateOther, id }: any) => {
+const Other = ({ id }: any) => {
   const { data: departments, isLoading: isDepartmentsLoading } =
     useGetDepartmentsQuery({});
   const { data: benefits, isLoading: isBenefitsLoading } = useGetBenefitQuery(
@@ -17,29 +17,21 @@ const Other = ({ onUpdateOther, id }: any) => {
   );
   const [gradeOptions, setGradeOptions] = useState<any[]>([]);
   const [benefitList, setBenefitList] = useState<string[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const { other } = useAppSelector((state) => state.employee);
   const { data: otherData } = useGetEmployeeByIdQuery(id || "");
   const [form] = Form.useForm();
-  
+
   useEffect(() => {
     if (otherData) {
       form.setFieldsValue(otherData);
     }
-  })
+  });
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+ 
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+
 
   useEffect(() => {
     if (departments) {
@@ -67,8 +59,22 @@ const Other = ({ onUpdateOther, id }: any) => {
   const handleGradeChange = (value: number) => {
     dispatch(updateOther({ ...other, grade: value }));
   };
+  useEffect(() => {
+    if (benefits) {
+      const benefitNames = benefits.map((benefit: any) => ({
+        label: benefit.name,
+        value: benefit.id,
+      }));
+      setBenefitList(benefitNames);
+    }
+  }, [benefits]);
+
+  const handleChange = (value: string[]) => {
+    console.log(`selected ${value}`);
+  };
+
   return (
-    <Form form={form} onFinish={onUpdateOther}>
+    <Form form={form}>
       <div className="box_add">
         <div className="header-form">
           <h2 className="title">Others</h2>
@@ -83,47 +89,19 @@ const Other = ({ onUpdateOther, id }: any) => {
               onChange={handleGradeChange}
             />
           </Form.Item>
-          <div className="box_list_benefit">
-            <Form.Item label="Benefit" name="benefit">
-              <div className="list_benefit">
-                <ul>
-                  {benefitList.map((benefit, index) => (
-                    <li key={index}>
-                      <div className="benefit_item">{benefit}</div>
-                      <div className="actions_benefit">
-                        <Button danger>
-                          <DeleteOutlined />
-                        </Button>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  style={{ width: "100%" }}
-                  type="primary"
-                  onClick={showModal}
-                >
-                  Add Benefit
-                </Button>
-                <Modal
-                  title="Add Benefit"
-                  open={isModalOpen}
-                  onOk={handleOk}
-                  onCancel={handleCancel}
-                >
-                  <Form.Item label="Name" name="benefit_name">
-                    <Input style={{ width: "100%" }} placeholder="Name" />
-                  </Form.Item>
-                  <Form.Item label="Code" name="code">
-                    <Input style={{ width: "100%" }} placeholder="Code" />
-                  </Form.Item>
-                  <Form.Item label="Type" name="type">
-                    <Input style={{ width: "100%" }} placeholder="Type" />
-                  </Form.Item>
-                </Modal>
-              </div>
-            </Form.Item>
-          </div>
+          <Form.Item label="Benefit" name="benefit">
+            <div className="list_benefit">
+              <Select
+                mode="multiple"
+                style={{ width: "400px" }}
+                placeholder="Select benefits"
+                onChange={handleChange}
+                loading={isBenefitsLoading}
+                options={benefitList}
+                
+              />
+            </div>
+          </Form.Item>
           <Form.Item label="Benefit(Photo)" name="benefit_photo">
             <Button icon={<UploadOutlined />}>Click to Upload</Button>
           </Form.Item>

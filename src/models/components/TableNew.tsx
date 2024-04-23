@@ -107,16 +107,23 @@ const TableNew = () => {
       dataIndex: "name",
     },
     {
+      title: "Gender",
+      dataIndex: "gender",
+      render: (employee: IEmployee) => {
+        return employee.gender === 0 ? "Male" : "Female";
+      },
+    },
+    {
       title: "Mother Name",
       dataIndex: "mother_name",
     },
     {
       title: "Marriage Status",
-      dataIndex: "marriage_id",
+      dataIndex: "marriage_code",
     },
     {
       title: "Position",
-      dataIndex: "position_id",
+      dataIndex: "position_name",
     },
     {
       title: "Date",
@@ -137,8 +144,12 @@ const TableNew = () => {
     },
     {
       title: "Department",
-      dataIndex: "department_id",
+      dataIndex: "department_name",
     },
+    {
+      title: "Basic Salary",
+      dataIndex: "basic_salary",
+    }
   ];
 
   const dataSource = employees.data
@@ -169,7 +180,7 @@ const TableNew = () => {
         </div>
       </div>
       <div className="action_table">
-        <Button type="primary">
+        <Button style={{ backgroundColor: "rgb(237, 246, 255)" , color: "rgb(0, 145, 255)"}}>
           <FileAddOutlined />
           <Link to="/add-or-update-employee">Add</Link>
         </Button>

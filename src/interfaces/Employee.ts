@@ -2,7 +2,7 @@ export interface IEmployee {
     key: number,
     id: string,
     name: string,
-    gender: number,
+    gender: number | string,
     card_number: number,
     dob: string,
     mother_name: string,
@@ -48,5 +48,8 @@ export interface IEmployee {
     contract_from_extension: string,
     contract_to_extension: string,
     contract_name: string,
-    contract_date: string
+    contract_date: string,
+    hidden_on_payroll: string,
+    position_id: number,
+    satefy_insurance: number
 }

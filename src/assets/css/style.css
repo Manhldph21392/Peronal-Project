@@ -25,9 +25,9 @@ a {
     padding: 20px;
 }
 
-.box_table .ant-table-cell {
-    min-width: 150px;
-}
+/* .box_table .ant-table-cell {
+    min-width: 90px;
+} */
 
 .box_table .ant-table-row {
     background: #fff;
@@ -35,6 +35,39 @@ a {
 
 .box_table .ant-table-content {
     overflow: auto;
+}
+
+.ant-table-thead th {
+    width: auto;
+}
+
+.ant-table-tbody td {
+    background: #F8F9FA !important;
+    border: 1px solid #fff;
+}
+
+.ant-table-thead th,
+.ant-table-tbody td {
+    white-space: nowrap;
+}
+
+.ant-table {
+    overflow-x: auto;
+}
+
+.ant-form-item-label {
+    width: 30%;
+    display: flex;
+    align-items: center;
+}
+
+.ant-form-item-control {
+    width: 60%;
+}
+
+.ant-form-item-control-input-content {
+    display: flex;
+    justify-content: right;
 }
 
 .action_table {
@@ -46,9 +79,10 @@ a {
 .action_table button {
     margin: 0 5px;
 }
-.ant-table-thead th:first-child{
+
+/* .ant-table-thead th:first-child{
     width: 30px;
-}
+} */
 
 .box_table .ant-table-content {
     overflow: auto;
@@ -288,8 +322,18 @@ a {
     font-weight: 500;
 }
 
+.ant-table-thead th:first-child,
+.ant-table-tbody td:first-child {
+    width: 30px;
+}
+
 .box_content_add input {
     padding: 12px;
+    background-color: rgb(241, 243, 245);
+}
+
+.ant-select-selector {
+    background-color: rgb(241, 243, 245) !important;
 }
 
 .content_employment input {
@@ -306,6 +350,12 @@ a {
 
 .ant-picker {
     padding: 12px;
+    width: 100%;
+    background: rgb(241, 243, 245);
+}
+
+.ant-form-item-control-input-content {
+    justify-content: left;
 }
 
 .btn-upload {
@@ -317,6 +367,17 @@ a {
     background-color: rgb(237, 246, 255);
     min-width: 195px;
     border: 1px dashed;
+}
+
+thead.ant-table-thead {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+}
+
+th.ant-table-cell {
+    background: rgb(236, 238, 240) !important;
+    border: 1px solid white !important;
 }
 
 .btn-add {
@@ -364,6 +425,7 @@ a {
 .row_pagination .ant-pagination-options {
     display: none;
 }
+
 .ant-table-cell {
     padding: 5px !important;
     font-size: 12px !important;

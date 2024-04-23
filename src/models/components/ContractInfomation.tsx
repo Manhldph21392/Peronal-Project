@@ -4,7 +4,10 @@ import { UploadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
 import { Button, message, Upload } from "antd";
 import { useAppDispatch, useAppSelector } from "../../stores/store";
-import { updateContractInfomation } from "../../slices/employe";
+import {
+  IContractInfomation,
+  updateContractInfomation,
+} from "../../slices/employe";
 import moment from "moment";
 import { useGetEmployeeByIdQuery } from "../../api/employee";
 const props: UploadProps = {
@@ -25,7 +28,7 @@ const props: UploadProps = {
   },
 };
 
-const ContractInfomation = ({ onUpdateContractInfo, id }: any) => {
+const ContractInfomation = ({ id }: any) => {
   const dispatch: any = useAppDispatch();
   const { contractInfomation } = useAppSelector((state) => state.employee);
   const { data: contractInfomationData } = useGetEmployeeByIdQuery(id || "");
@@ -34,8 +37,31 @@ const ContractInfomation = ({ onUpdateContractInfo, id }: any) => {
 
   useEffect(() => {
     if (contractInfomationData) {
-      form.setFieldsValue(contractInfomationData);
-      onUpdateContractInfo(contractInfomationData);
+      const {
+        contract_start_date,
+        type,
+        contract_date_from,
+        contract_date_to,
+        contract_from_extension,
+        contract_to_extension,
+        contract_date,
+        contract_name,
+      } = contractInfomationData;
+
+      const contracInfoData: IContractInfomation = {
+        contract_start_date,
+        type,
+        contract_date_from,
+        contract_date_to,
+        contract_from_extension,
+        contract_to_extension,
+        contract_date,
+        contract_name,
+      };
+
+      form.setFieldsValue(contracInfoData);
+      form.setFieldValue("contract_date", moment(contract_start_date));
+      dispatch(updateContractInfomation(contracInfoData));
     }
   }, [contractInfomationData]);
   const handleDateStartChange = (date: moment.Moment | null) => {
@@ -142,7 +168,7 @@ const ContractInfomation = ({ onUpdateContractInfo, id }: any) => {
   ];
   return (
     <div>
-      <Form form={form} onFinish={onUpdateContractInfo}>
+      <Form form={form}>
         <div className="box_add">
           <div className="header-form">
             <h2 className="title">Contract Information</h2>
@@ -169,7 +195,7 @@ const ContractInfomation = ({ onUpdateContractInfo, id }: any) => {
               </Form.Item>
               <Form.Item
                 label="Employee type"
-                name="employee_type"
+                name="type"
                 rules={[
                   {
                     required: true,
@@ -182,7 +208,6 @@ const ContractInfomation = ({ onUpdateContractInfo, id }: any) => {
                   placeholder="Select a employee type"
                   onChange={handleEmployeeTypeChange}
                   value={contractInfomation.type}
-                  defaultValue={contractInfomationData?.type}
                   options={[
                     {
                       value: 0,
