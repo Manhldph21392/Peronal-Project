@@ -3,7 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface IEmployeeInfomation {
     name: string,
     home_address_1: string,
-    gender: number,
+    gender: number | string,
     id: string,
     mother_name: string,
     dob?: string,

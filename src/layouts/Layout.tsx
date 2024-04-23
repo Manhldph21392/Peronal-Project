@@ -68,7 +68,35 @@ const Layouts = () => {
       "Employee Management",
       "1",
       <Link to={"/employee"}>
-        <UserOutlined />
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5.83317 6.66675H3.33317C2.4165 6.66675 1.6665 5.91675 1.6665 5.00008V3.33341C1.6665 2.41675 2.4165 1.66675 3.33317 1.66675H5.83317C6.74984 1.66675 7.49984 2.41675 7.49984 3.33341V5.00008C7.49984 5.91675 6.74984 6.66675 5.83317 6.66675Z"
+            fill="#94BA2C"
+          ></path>
+          <path
+            d="M17.3335 5.83333H14.3335C13.7835 5.83333 13.3335 5.38332 13.3335 4.83332V3.50001C13.3335 2.95001 13.7835 2.5 14.3335 2.5H17.3335C17.8835 2.5 18.3335 2.95001 18.3335 3.50001V4.83332C18.3335 5.38332 17.8835 5.83333 17.3335 5.83333Z"
+            fill="#94BA2C"
+          ></path>
+          <path
+            d="M17.3335 12.0833H14.3335C13.7835 12.0833 13.3335 11.6333 13.3335 11.0833V9.75001C13.3335 9.20001 13.7835 8.75 14.3335 8.75H17.3335C17.8835 8.75 18.3335 9.20001 18.3335 9.75001V11.0833C18.3335 11.6333 17.8835 12.0833 17.3335 12.0833Z"
+            fill="#94BA2C"
+          ></path>
+          <path
+            opacity="0.37"
+            d="M13.3333 11.0417C13.675 11.0417 13.9583 10.7584 13.9583 10.4167C13.9583 10.0751 13.675 9.79175 13.3333 9.79175H11.0417V4.79175H13.3333C13.675 4.79175 13.9583 4.50841 13.9583 4.16675C13.9583 3.82508 13.675 3.54175 13.3333 3.54175H7.5C7.15833 3.54175 6.875 3.82508 6.875 4.16675C6.875 4.50841 7.15833 4.79175 7.5 4.79175H9.79167V15.0001C9.79167 16.2667 10.8167 17.2917 12.0833 17.2917H13.3333C13.675 17.2917 13.9583 17.0084 13.9583 16.6667C13.9583 16.3251 13.675 16.0417 13.3333 16.0417H12.0833C11.5083 16.0417 11.0417 15.5751 11.0417 15.0001V11.0417H13.3333Z"
+            fill="#94BA2C"
+          ></path>
+          <path
+            d="M17.3335 18.3333H14.3335C13.7835 18.3333 13.3335 17.8833 13.3335 17.3333V16C13.3335 15.45 13.7835 15 14.3335 15H17.3335C17.8835 15 18.3335 15.45 18.3335 16V17.3333C18.3335 17.8833 17.8835 18.3333 17.3335 18.3333Z"
+            fill="#94BA2C"
+          ></path>
+        </svg>
       </Link>
     ),
   ];
@@ -82,7 +110,7 @@ const Layouts = () => {
           <div className="header_body">
             <div className="header_body_left">
               <img
-                src="https://s3-alpha-sig.figma.com/img/6650/a3f3/139caf936060b11ca513200f3bf1d056?Expires=1713139200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bkxLzFoN1isH6SJPMAsaFFLsruLuz7-0WdODcG4rLeCZWmMvE7BGUu0gX0frja~HCU5quo-WOc9khgPId3eDpARLQ8HnJM1QF39Ay7B~qK~XZgpKUrd3NjaDdpflcFKabRKr-wvqFY0jO0ltHn~u1uUjSFsw~jDzDqre0SDnykr9EWzX2FWlgbX41FbfEGtZf51PGwHUyLyOhph3MVveKagIUO~LnKWQW98jOOfs3KUeHgQwkpovz9XFp9edeWIxl~87~v2DxCu6EzBhPvI0anyfXmSfd9DD4Zns4Z4UXcxCr6AO8T8QI9jAyXeVSCXS9gLFguHfQBbijahTxWqX0A__"
+                src="https://s3-alpha-sig.figma.com/img/6650/a3f3/139caf936060b11ca513200f3bf1d056?Expires=1714953600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=OzNleg9cyZIcARb-tAIvsnROGAokvuRqRjHCw9rSza8ZF9VfMXPmKjN9iRm9qL9ZYsP3GTKh4k--ieczcN9~D~zJMk8zXJL8~Q58xqpg76qI15Rf2W-~64GyQZx0vdLFNXvsjC8PNnX4sKxl6DWwwZwd0np3Gec2UwDbwRIbUzRP2MnJ14r8sgNkvlruq~neyfQCAol-d5eDqvuvdYUI31nyotOqqaj2w9f49ekrkGGEMhGS6wyTpGWfaxS61R6Pz2U5iPSmgVktI70rkOtkgdmW8UR2YzDxfu6pBTkqc-1gnK~kC~mKmv7ok8DyZbgYNd2nlvcoSXU7mw2HT1VmZg__"
                 alt=""
               />
               <h2>HR Management System</h2>

@@ -10,6 +10,7 @@ import {
   useGetEmployeeByIdQuery,
   useGetMarriageQuery,
 } from "../../api/employee";
+import moment from "moment";
 const EmployeeInfomation = ({ id }: any) => {
   const { employeeInfomation } = useAppSelector((state) => state.employee);
   const { data: marriages = [] } = useGetMarriageQuery({});
@@ -72,6 +73,7 @@ const EmployeeInfomation = ({ id }: any) => {
       };
 
       form.setFieldsValue(employeeData);
+      form.setFieldValue("dob", moment(dob, formatDate));
       dispatch(updateEmployeeInfomation(employeeData));
     }
   }, [employeeInfomationData]);
@@ -81,7 +83,7 @@ const EmployeeInfomation = ({ id }: any) => {
       updateEmployeeInfomation({ ...employeeInfomation, name: e.target.value })
     );
   };
-  const handleGenderChange = (value: number) => {
+  const handleGenderChange = (value: number | string) => {
     dispatch(
       updateEmployeeInfomation({
         ...employeeInfomation,
@@ -361,7 +363,7 @@ const EmployeeInfomation = ({ id }: any) => {
 
               <Form.Item
                 label="Date of birth"
-                name="dateOfBirth"
+                name="dob"
                 rules={[
                   {
                     required: true,
@@ -372,7 +374,6 @@ const EmployeeInfomation = ({ id }: any) => {
                 <DatePicker
                   format={formatDate}
                   onChange={handleDateofBirthChange}
-                  value={employeeInfomationData?.dob}
                 />
               </Form.Item>
 

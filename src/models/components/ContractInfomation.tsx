@@ -60,6 +60,7 @@ const ContractInfomation = ({ id }: any) => {
       };
 
       form.setFieldsValue(contracInfoData);
+      form.setFieldValue("contract_date", moment(contract_start_date));
       dispatch(updateContractInfomation(contracInfoData));
     }
   }, [contractInfomationData]);
@@ -194,7 +195,7 @@ const ContractInfomation = ({ id }: any) => {
               </Form.Item>
               <Form.Item
                 label="Employee type"
-                name="employee_type"
+                name="type"
                 rules={[
                   {
                     required: true,
@@ -207,7 +208,6 @@ const ContractInfomation = ({ id }: any) => {
                   placeholder="Select a employee type"
                   onChange={handleEmployeeTypeChange}
                   value={contractInfomation.type}
-                  defaultValue={contractInfomationData?.type}
                   options={[
                     {
                       value: 0,
