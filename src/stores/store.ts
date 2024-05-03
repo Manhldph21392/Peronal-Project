@@ -6,6 +6,7 @@ import authApi from "../api/auth";
 import employeeApi from "../api/employee";
 import { employeeSlice } from "../slices/employe";
 import { useDispatch, useSelector } from "react-redux";
+import uploadApi from "../api/upload";
 
 const persistConfig = {
     key: "root",
@@ -16,12 +17,14 @@ const persistConfig = {
 const rootReducer = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [employeeApi.reducerPath]: employeeApi.reducer,
-    employee: employeeSlice.reducer
+    employee: employeeSlice.reducer,
+    [uploadApi.reducerPath]: uploadApi.reducer
 });
 
 const middleware = [
     authApi.middleware,
     employeeApi.middleware,
+    uploadApi.middleware
 ];
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

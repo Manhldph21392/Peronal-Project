@@ -1,7 +1,7 @@
 import { Form, InputNumber } from "antd";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../stores/store";
-import { updateSalaryWages } from "../../slices/employe";
+import { ISalaryWages, updateSalaryWages } from "../../slices/employe";
 import { useGetEmployeeByIdQuery } from "../../api/employee";
 
 const SalaryWages = ({ id }: any) => {
@@ -12,9 +12,24 @@ const SalaryWages = ({ id }: any) => {
 
   useEffect(() => {
     if (SalaryWagesData) {
+      const {
+        salary,
+        basic_audit,
+        satefy_insurance,
+        health_insurance,
+        meal_allowance,
+      } = SalaryWagesData;
+      const SalaryData: ISalaryWages = {
+        salary,
+        basic_audit,
+        satefy_insurance,
+        health_insurance,
+        meal_allowance,
+      };
       form.setFieldsValue(SalaryWagesData);
+      dispatch(updateSalaryWages(SalaryData));
     }
-  });
+  }, [SalaryWagesData]);
   const handleBasicSalaryChange = (value: number | null) => {
     dispatch(
       updateSalaryWages({
@@ -48,7 +63,7 @@ const SalaryWages = ({ id }: any) => {
     );
   };
   return (
-    <Form form={form} >
+    <Form form={form}>
       <div className="box_add">
         <div className="header-form">
           <h2 className="title">Salary & Wages</h2>

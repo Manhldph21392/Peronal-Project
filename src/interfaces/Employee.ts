@@ -20,7 +20,7 @@ export interface IEmployee {
     department_id: number,
     possition_id: number,
     shilft: string,
-    type: number,
+    type: number | string,
     entitle_ot: string,
     meal_allowance_paid: string,
     operational_allowance_paid: string,
@@ -51,5 +51,10 @@ export interface IEmployee {
     contract_date: string,
     hidden_on_payroll: string,
     position_id: number,
-    satefy_insurance: number
+    satefy_insurance: number,
+    salary: number,
+    basic_audit: number,
+    benefits: [],
+    grade: number,
+
 }

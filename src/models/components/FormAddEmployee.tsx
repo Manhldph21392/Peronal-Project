@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Tabs, message } from "antd";
+import { Form, Tabs, message, notification } from "antd";
 import { Button } from "antd";
 import { useAppSelector } from "../../stores/store";
 
@@ -13,6 +13,8 @@ import {
   useUpdateEmployeeMutation,
 } from "../../api/employee";
 import { useNavigate, useParams } from "react-router-dom";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
 
 const { TabPane } = Tabs;
 
@@ -44,7 +46,7 @@ const FormAddEmployee = () => {
 
   const handleAddEmployee = async () => {
     try {
-      await createEmployee({
+      const response = await createEmployee({
         ...employeeInfomation,
         ...contractInfomation,
         ...employmentDetails,
@@ -53,25 +55,68 @@ const FormAddEmployee = () => {
         dob: employeeInfomation.dob,
         contract_start_date: contractInfomation.contract_start_date,
       });
-      navigate("/employee");
-      message.success("Add employee successfully");
+
+      if ("error" in response) {
+        const errorResponse = response as { error: any };
+
+        if (errorResponse.error.status) {
+          const errorMessage =
+            errorResponse.error.data?.message || "Unknown error";
+          notification.error({
+            message: "Thêm nhân viên không thành công",
+            description: errorMessage,
+            placement: "topRight",
+          });
+        } else {
+          const errorMessage = errorResponse.error.message || "Unknown error";
+          notification.error({
+            message: "Thêm nhân viên không thành công",
+            description: errorMessage,
+            placement: "topRight",
+          });
+        }
+      } else {
+        const successResponse = response as { data: any };
+        navigate("/employee");
+        notification.success({
+          message: "Thêm nhân viên thành công",
+          placement: "topRight",
+        });
+      }
     } catch (error) {
-      message.error("Failed to add employee. Please try again later");
+      notification.error({
+        message: "Thêm nhân viên không thành công",
+        description: "Vui lòng thử lại sau",
+        placement: "topRight",
+      });
     }
   };
-
   const handleUpdateEmployee = async () => {
-    await updateEmployee({
-      ...employeeInfomation,
-      ...contractInfomation,
-      ...employmentDetails,
-      ...salaryWages,
-      ...other,
-      dob: employeeInfomation.dob,
-      contract_start_date: contractInfomation.contract_start_date,
-      id,
-    });
-    navigate("/employee");
+    try {
+      await updateEmployee({
+        ...employeeInfomation,
+        ...contractInfomation,
+        ...employmentDetails,
+        ...salaryWages,
+        ...other,
+        dob: employeeInfomation.dob,
+        contract_start_date: contractInfomation.contract_start_date,
+        id,
+      });
+
+      notification.success({
+        message: "Cập nhật thông tin nhân viên thành công",
+        placement: "topRight",
+      });
+
+      navigate("/employee");
+    } catch (error) {
+      notification.error({
+        message: "Cập nhật thông tin nhân viên không thành công",
+        description: "Vui lòng thử lại sau",
+        placement: "topRight",
+      });
+    }
   };
 
   const handleButtonClick = async () => {

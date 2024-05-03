@@ -6,6 +6,7 @@ import ResetPassword from "./models/components/ResetPassword";
 import Layouts from "./layouts/Layout";
 import CreateAndUpdateEmployeePage from "./models/pages/CreateAndUpdateEmployeePage";
 import EmployeePage from "./models/pages/EmployeePage";
+import NotFoundFage from "./models/pages/NotFoundFage";
 
 const PrivateRouter = ({ element }: { element: React.ReactNode }) => {
   const token = localStorage.getItem("token");
@@ -55,5 +56,9 @@ export const router = createBrowserRouter([
   {
     path: "/auth/reset-password",
     element: <ResetPassword />,
+  },
+  {
+    path: "*",
+    element: <NotFoundFage />,
   },
 ]);

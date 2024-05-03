@@ -28,7 +28,7 @@ export interface IEmployeeInfomation {
 }
 export interface IContractInfomation {
     contract_start_date: string,
-    type: number,
+    type: number | string,
     contract_date_from: string,
     contract_date_to: string,
     contract_from_extension: string,
@@ -39,7 +39,8 @@ export interface IContractInfomation {
 export interface IEmploymentDetails {
     department_id: number,
     position_id: number,
-    hidden_on_payroll: string
+    hidden_on_payroll: string,
+    entitle_ot: string,
 }
 export interface ISalaryWages {
     salary: number | null,

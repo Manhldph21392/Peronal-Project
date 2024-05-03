@@ -62,7 +62,8 @@ const LoginForm = () => {
             label="Password"
             rules={[
               { required: true, message: "Please input your password!" },
-              { min: 6, message: "Password must be at least 6 characters" },
+              { min: 8, message: "Password must be at least 8 characters" },
+              { max: 16, message: "Password must be at most 16 characters" },
             ]}
           >
             <Input.Password />

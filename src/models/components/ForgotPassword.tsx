@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Button, Form, Input, message } from "antd";
 import { useForgotPasswordMutation } from "../../api/auth";
+import { Link } from "react-router-dom";
 
 const ForgotPassword = () => {
   const [form] = Form.useForm();
@@ -29,7 +30,11 @@ const ForgotPassword = () => {
   return (
     <div className="wrap-login">
       <div className="headerLogin">
-        <h2>Forgot Password</h2>
+        <div className="box_icon">
+          <img src="http://web-qa.hrm.div4.pgtest.co/static/media/HR_Logo.7c93eebe8886301b470d6d7131b23a95.svg" />
+          <h2>HR Management System</h2>
+        </div>
+        <h2 style={{ fontSize: "32px" }}>Forgot Password</h2>
       </div>
       <div className="loginForm">
         <Form
@@ -49,13 +54,17 @@ const ForgotPassword = () => {
           >
             <Input />
           </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" loading={isSubmitting}>
+          
+            <Button style={{ width: "100%" }} type="primary" htmlType="submit" loading={isSubmitting}>
               Submit
             </Button>
-          </Form.Item>
+            <h4>
+            <Link to="/login">Back to Signin</Link>
+            </h4>
+          
         </Form>
       </div>
+     
     </div>
   );
 };

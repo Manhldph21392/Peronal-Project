@@ -380,12 +380,7 @@ const EmployeeInfomation = ({ id }: any) => {
               <Form.Item
                 label="Place of birth"
                 name="pob"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Place of birth is required!",
-                  },
-                ]}
+               
               >
                 <Input
                   value={employeeInfomation.pob}

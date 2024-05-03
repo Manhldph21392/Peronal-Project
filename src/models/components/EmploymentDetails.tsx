@@ -21,11 +21,13 @@ const EmploymentDetails = ({ id }: any) => {
 
   useEffect(() => {
     if (employmenData) {
-      const { department_id, position_id, hidden_on_payroll } = employmenData;
+      const { department_id, position_id, hidden_on_payroll, entitle_ot } =
+        employmenData;
       const employmentData: IEmploymentDetails = {
         department_id,
         position_id,
         hidden_on_payroll,
+        entitle_ot,
       };
       form.setFieldsValue(employmentData);
       dispatch(updateEmploymentDetails(employmentData));
@@ -56,6 +58,14 @@ const EmploymentDetails = ({ id }: any) => {
       updateEmploymentDetails({
         ...employmentDetails,
         hidden_on_payroll: e.target.checked ? "1" : "0",
+      })
+    );
+  };
+  const handleEntitleOTChange: CheckboxProps["onChange"] = (e) => {
+    dispatch(
+      updateEmploymentDetails({
+        ...employmentDetails,
+        entitle_ot: e.target.checked ? "1" : "0",
       })
     );
   };
@@ -105,6 +115,14 @@ const EmploymentDetails = ({ id }: any) => {
               value={Number(employmentDetails.hidden_on_payroll)}
             >
               Hidden On Payroll
+            </Checkbox>
+          </Form.Item>
+          <Form.Item label="" name="entitle_ot">
+            <Checkbox
+              onChange={handleEntitleOTChange}
+              value={Number(employmentDetails.entitle_ot)}
+            >
+             Entitled OT
             </Checkbox>
           </Form.Item>
         </div>

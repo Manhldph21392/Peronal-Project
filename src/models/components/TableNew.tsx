@@ -38,6 +38,11 @@ const TableNew = () => {
 
     return () => clearTimeout(timeout); // Clear timeout khi searchKeyword thay đổi
   }, [searchKeyword]); // Chỉ gọi lại useEffect khi searchKeyword thay đổi
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const keyword = searchParams.get("keyword") || "";
+    setSearchKeyword(keyword);
+  }, []);
   const {
     data: employees = [],
     refetch,
@@ -50,6 +55,10 @@ const TableNew = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value); // Cập nhật từ khóa tìm kiếm khi người dùng nhập
     setCurrentPage(1); // Reset trang về trang đầu tiên khi tìm kiếm
+    const keyword = e.target.value;
+    setSearchKeyword(keyword);
+    // Cập nhật tham số tìm kiếm trên URL params
+    navigate(`?keyword=${encodeURIComponent(keyword)}`);
   };
   const handlePageChange = (page: number) => {
     setCurrentPage(page); // Cập nhật current_page khi chuyển trang
@@ -140,7 +149,7 @@ const TableNew = () => {
     },
     {
       title: "Tel No",
-      dataIndex: "entitle_ot",
+      dataIndex: "tel_no",  
     },
     {
       title: "Department",
@@ -149,6 +158,14 @@ const TableNew = () => {
     {
       title: "Basic Salary",
       dataIndex: "basic_salary",
+    },
+    {
+      title: "Old NIK",
+      dataIndex: "old_staff_id",
+    },
+    {
+      title: "Entitle OT",
+      dataIndex: "entitle_ot",
     }
   ];
 
@@ -180,7 +197,12 @@ const TableNew = () => {
         </div>
       </div>
       <div className="action_table">
-        <Button style={{ backgroundColor: "rgb(237, 246, 255)" , color: "rgb(0, 145, 255)"}}>
+        <Button
+          style={{
+            backgroundColor: "rgb(237, 246, 255)",
+            color: "rgb(0, 145, 255)",
+          }}
+        >
           <FileAddOutlined />
           <Link to="/add-or-update-employee">Add</Link>
         </Button>

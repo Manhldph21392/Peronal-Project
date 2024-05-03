@@ -75,7 +75,7 @@ const ContractInfomation = ({ id }: any) => {
       );
     }
   };
-  const handleEmployeeTypeChange = (value: number) => {
+  const handleEmployeeTypeChange = (value: number | string) => {
     dispatch(
       updateContractInfomation({
         ...contractInfomation,
@@ -180,7 +180,7 @@ const ContractInfomation = ({ id }: any) => {
             <div className="short_line">
               <Form.Item
                 label="Date start"
-                name="dateStart"
+                name="contract_date"
                 rules={[
                   {
                     required: true,
