@@ -113,6 +113,7 @@ const EmploymentDetails = ({ id }: any) => {
             <Checkbox
               onChange={handleHiddenChange}
               value={Number(employmentDetails.hidden_on_payroll)}
+              checked = {Number(employmentDetails.hidden_on_payroll) === 1}
             >
               Hidden On Payroll
             </Checkbox>
@@ -121,6 +122,7 @@ const EmploymentDetails = ({ id }: any) => {
             <Checkbox
               onChange={handleEntitleOTChange}
               value={Number(employmentDetails.entitle_ot)}
+              checked = {Number(employmentDetails.entitle_ot) === 1}
             >
              Entitled OT
             </Checkbox>

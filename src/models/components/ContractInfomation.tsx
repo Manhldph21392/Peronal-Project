@@ -225,67 +225,6 @@ const ContractInfomation = ({ id }: any) => {
                 />
               </Form.Item>
             </div>
-            <div className="contract">
-              <h3>Contract</h3>
-              <div className="long_line">
-                <Form.Item label="Contract Date From" name="contract_date_from">
-                  <DatePicker
-                    style={{ width: "100%" }}
-                    onChange={handleContractDateFromChange}
-                  />
-                </Form.Item>
-                <Form.Item label="To" name={"contract_date_to"}>
-                  <DatePicker onChange={handleContractDateToChange} />
-                </Form.Item>
-              </div>
-            </div>
-            <div className="contract">
-              <h3>Extension Contract</h3>
-              <div className="long_line">
-                <Form.Item
-                  label="Contract Date From"
-                  name="contract_from_extension"
-                >
-                  <DatePicker
-                    style={{ width: "100%" }}
-                    onChange={handleContractFromExtensionChange}
-                  />
-                </Form.Item>
-                <Form.Item label="To" name={"contract_to_extension"}>
-                  <DatePicker onChange={handleContractToExtensionChange} />
-                </Form.Item>
-              </div>
-            </div>
-            <div className="table_contract">
-              <div className="table_contract_title">
-                <h4>CONTRACT:</h4>
-              </div>
-              <p>Please upload pdf, png, xlsx, docx file format!</p>
-              <div className="table_contract_content">
-                <div className="content_left">
-                  <Form.Item label="Contract Date" name={"contract_date"}>
-                    <DatePicker onChange={handleContractDateChange} />
-                  </Form.Item>
-                  <Form.Item label="Contract Name" name={"contract_name"}>
-                    <Input onChange={handleContractNameChange} />
-                  </Form.Item>
-                  <div className="group_button">
-                    <Upload {...props}>
-                      <Button
-                        className="btn btn-upload"
-                        icon={<UploadOutlined />}
-                      >
-                        Upload file
-                      </Button>
-                    </Upload>
-                    <Button className="btn btn-add">Add</Button>
-                  </div>
-                </div>
-                <div className="content_right">
-                  <Table dataSource={dataSource} columns={columns} />;
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </Form>

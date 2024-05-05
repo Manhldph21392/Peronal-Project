@@ -118,8 +118,8 @@ const TableNew = () => {
     {
       title: "Gender",
       dataIndex: "gender",
-      render: (employee: IEmployee) => {
-        return employee.gender === 0 ? "Male" : "Female";
+      render: (text: string, employee: IEmployee) => {
+        return employee?.gender == 0 ? "Male" : "Female";
       },
     },
     {
@@ -149,7 +149,7 @@ const TableNew = () => {
     },
     {
       title: "Tel No",
-      dataIndex: "tel_no",  
+      dataIndex: "tel_no",
     },
     {
       title: "Department",
@@ -164,9 +164,12 @@ const TableNew = () => {
       dataIndex: "old_staff_id",
     },
     {
-      title: "Entitle OT",
+      title: "Entitled OT",
       dataIndex: "entitle_ot",
-    }
+      render: (text: number) => {
+        return text === 1 ? "Yes" : "No";
+      },
+    },
   ];
 
   const dataSource = employees.data
