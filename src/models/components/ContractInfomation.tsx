@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
-import { DatePicker, Form, Input, Select, Table } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { useEffect } from "react";
+import { DatePicker, Form, Select } from "antd";
 import type { UploadProps } from "antd";
-import { Button, message, Upload } from "antd";
+import { message } from "antd";
 import { useAppDispatch, useAppSelector } from "../../stores/store";
 import {
   IContractInfomation,
@@ -84,88 +83,6 @@ const ContractInfomation = ({ id }: any) => {
     );
   };
 
-  const handleContractDateFromChange = (date: moment.Moment | null) => {
-    if (date) {
-      const dateString = moment(date).format("YYYY-MM-DD");
-      dispatch(
-        updateContractInfomation({
-          ...contractInfomation,
-          contract_date_from: dateString,
-        })
-      );
-    }
-  };
-  const handleContractDateToChange = (date: moment.Moment | null) => {
-    if (date) {
-      const dateString = moment(date).format("YYYY-MM-DD");
-      dispatch(
-        updateContractInfomation({
-          ...contractInfomation,
-          contract_date_to: dateString,
-        })
-      );
-    }
-  };
-  const handleContractFromExtensionChange = (date: moment.Moment | null) => {
-    if (date) {
-      const dateString = moment(date).format("YYYY-MM-DD");
-      dispatch(
-        updateContractInfomation({
-          ...contractInfomation,
-          contract_from_extension: dateString,
-        })
-      );
-    }
-  };
-  const handleContractToExtensionChange = (date: moment.Moment | null) => {
-    if (date) {
-      const dateString = moment(date).format("YYYY-MM-DD");
-      dispatch(
-        updateContractInfomation({
-          ...contractInfomation,
-          contract_to_extension: dateString,
-        })
-      );
-    }
-  };
-  const handleContractDateChange = (date: moment.Moment | null) => {
-    if (date) {
-      const dateString = moment(date).format("YYYY-MM-DD");
-      dispatch(
-        updateContractInfomation({
-          ...contractInfomation,
-          contract_date: dateString,
-        })
-      );
-    }
-  };
-  const handleContractNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      updateContractInfomation({
-        ...contractInfomation,
-        contract_name: e.target.value,
-      })
-    );
-  };
-  const dataSource = [{}];
-
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-    },
-    {
-      title: "Action",
-      dataIndex: "address",
-      key: "address",
-    },
-  ];
   return (
     <div>
       <Form form={form}>
