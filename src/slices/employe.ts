@@ -43,14 +43,14 @@ export interface IEmploymentDetails {
     entitle_ot: string,
 }
 export interface ISalaryWages {
-    salary: number | null,
-    basic_audit: number | null,
-    satefy_insurance: number | null,
+    basic_salary: number | null,
+    audit_salary: number | null,
+    safety_insurance: number | null,
     health_insurance: number | null,
     meal_allowance: number | null,
 }
 export interface IOther {
-    grade: number,
+    grade_id: number,
     remark: string,
     benefits: [],
 }

@@ -17,7 +17,6 @@ const EmployeeInfomation = ({ id }: any) => {
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
   const { data: employeeInfomationData } = useGetEmployeeByIdQuery(id || "");
-  const formatDate = "YYYY-MM-DD";
   useEffect(() => {
     if (employeeInfomationData) {
       const {
@@ -73,7 +72,7 @@ const EmployeeInfomation = ({ id }: any) => {
       };
 
       form.setFieldsValue(employeeData);
-      form.setFieldValue("dob", moment(dob, formatDate));
+      form.setFieldValue("dob", moment(dob));
       dispatch(updateEmployeeInfomation(employeeData));
     }
   }, [employeeInfomationData]);
@@ -99,13 +98,16 @@ const EmployeeInfomation = ({ id }: any) => {
       })
     );
   };
-  const handleDateofBirthChange = (value: string) => {
-    dispatch(
-      updateEmployeeInfomation({
-        ...employeeInfomation,
-        dob: value,
-      })
-    );
+  const handleDateofBirthChange = (date: moment.Moment | null) => {
+    if (date) {
+      const dob = moment(date).format("YYYY-MM-DD");
+      dispatch(
+        updateEmployeeInfomation({
+          ...employeeInfomation,
+          dob,
+        })
+      );
+    }
   };
 
   const handlePlaceofBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -371,17 +373,10 @@ const EmployeeInfomation = ({ id }: any) => {
                   },
                 ]}
               >
-                <DatePicker
-                  format={formatDate}
-                  onChange={handleDateofBirthChange}
-                />
+                <DatePicker onChange={handleDateofBirthChange} />
               </Form.Item>
 
-              <Form.Item
-                label="Place of birth"
-                name="pob"
-               
-              >
+              <Form.Item label="Place of birth" name="pob">
                 <Input
                   value={employeeInfomation.pob}
                   onChange={handlePlaceofBirthChange}

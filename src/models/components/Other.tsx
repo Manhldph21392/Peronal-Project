@@ -34,9 +34,9 @@ const Other = ({ id }: any) => {
 
   useEffect(() => {
     if (otherData) {
-      const { grade, remark, benefits } = otherData;
+      const { grade_id, remark, benefits } = otherData;
       const otherDataTab: IOther = {
-        grade,
+        grade_id,
         remark,
         benefits,
       };
@@ -67,12 +67,11 @@ const Other = ({ id }: any) => {
       if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
 
-
         setFileList([
           ...fileList,
           {
             name: info.file.name,
-            createdAt: new Date().toISOString(), 
+            createdAt: new Date().toISOString(),
           },
         ]);
       } else if (info.file.status === "error") {
@@ -89,15 +88,11 @@ const Other = ({ id }: any) => {
     },
   };
 
-  const handleBenefitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) {
-      setBenefitList([...benefitList, e.target.value]);
-    } else {
-      setBenefitList(benefitList.filter((item) => item !== e.target.value));
-    }
+  const handleBenefitChange = (value: []) => {
+    dispatch(updateOther({ ...other, benefits: value }));
   };
   const handleGradeChange = (value: number) => {
-    dispatch(updateOther({ ...other, grade: value }));
+    dispatch(updateOther({ ...other, grade_id: value }));
   };
   useEffect(() => {
     if (benefits) {
@@ -144,16 +139,16 @@ const Other = ({ id }: any) => {
         </div>
         <Form form={form}>
           <div className="content_other">
-            <Form.Item label="Grade" name="grade">
+            <Form.Item label="Grade" name="grade_id">
               <Select
                 style={{ width: "100%" }}
                 loading={isDepartmentsLoading}
                 options={gradeOptions}
-                value={other.grade}
+                value={other.grade_id}
                 onChange={handleGradeChange}
               />
             </Form.Item>
-            <Form.Item label="Benefit" name="benefit">
+            <Form.Item label="Benefit" name="benefits">
               <div className="list_benefit">
                 <Select
                   mode="multiple"

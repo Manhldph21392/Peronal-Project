@@ -13,16 +13,16 @@ const SalaryWages = ({ id }: any) => {
   useEffect(() => {
     if (SalaryWagesData) {
       const {
-        salary,
-        basic_audit,
-        satefy_insurance,
+        basic_salary,
+        audit_salary,
+        safety_insurance,
         health_insurance,
         meal_allowance,
       } = SalaryWagesData;
       const SalaryData: ISalaryWages = {
-        salary,
-        basic_audit,
-        satefy_insurance,
+        basic_salary,
+        audit_salary,
+        safety_insurance,
         health_insurance,
         meal_allowance,
       };
@@ -34,7 +34,7 @@ const SalaryWages = ({ id }: any) => {
     dispatch(
       updateSalaryWages({
         ...salaryWages,
-        salary: value,
+        basic_salary: value,
       })
     );
   };
@@ -42,7 +42,7 @@ const SalaryWages = ({ id }: any) => {
     dispatch(
       updateSalaryWages({
         ...salaryWages,
-        basic_audit: value,
+        audit_salary: value,
       })
     );
   };
@@ -50,7 +50,7 @@ const SalaryWages = ({ id }: any) => {
     dispatch(
       updateSalaryWages({
         ...salaryWages,
-        satefy_insurance: value,
+        safety_insurance: value,
       })
     );
   };
@@ -72,24 +72,24 @@ const SalaryWages = ({ id }: any) => {
           <Form.Item label="Basic salary" name="basic_salary">
             <InputNumber
               style={{ width: "100%" }}
-              value={salaryWages.salary}
+              value={salaryWages.basic_salary}
               onChange={handleBasicSalaryChange}
             />
           </Form.Item>
           <Form.Item label="Basic salary(Audit)" name="audit_salary">
             <InputNumber
               style={{ width: "100%" }}
-              value={salaryWages.basic_audit}
+              value={salaryWages.audit_salary}
               onChange={handleBasicSalaryAuditChange}
             />
           </Form.Item>
           <Form.Item
             label="Safety Insurance Amount"
-            name="safety_insurance_amount"
+            name="safety_insurance"
           >
             <InputNumber
               style={{ width: "100%" }}
-              value={salaryWages.satefy_insurance}
+              value={salaryWages.safety_insurance}
               onChange={handleSafetyInsuranceAmountChange}
             />
           </Form.Item>
