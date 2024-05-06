@@ -52,7 +52,7 @@ export interface IEmployee {
     hidden_on_payroll: string,
     position_id: number,
     satefy_insurance: number,
-    benefits: [],
+    benefits: string[],
     grade: number,
 
 }

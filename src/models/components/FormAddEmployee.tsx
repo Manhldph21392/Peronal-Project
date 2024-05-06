@@ -13,8 +13,6 @@ import {
   useUpdateEmployeeMutation,
 } from "../../api/employee";
 import { useNavigate, useParams } from "react-router-dom";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { SerializedError } from "@reduxjs/toolkit";
 
 const { TabPane } = Tabs;
 

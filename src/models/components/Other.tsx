@@ -88,11 +88,16 @@ const Other = ({ id }: any) => {
     },
   };
 
-  const handleBenefitChange = (value: []) => {
-    dispatch(updateOther({ ...other, benefits: value }));
+  const handleBenefitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setBenefitList([...benefitList, e.target.value]);
+    } else {
+      setBenefitList(benefitList.filter((item) => item !== e.target.value));
+    }
   };
   const handleGradeChange = (value: number) => {
-    dispatch(updateOther({ ...other, grade_id: value }));
+    form.setFieldsValue({ grade_id: value }); // Cập nhật giá trị grade_id trong form
+    dispatch(updateOther({ ...other, grade_id: value })); // Cập nhật state other
   };
   useEffect(() => {
     if (benefits) {

@@ -52,7 +52,7 @@ export interface ISalaryWages {
 export interface IOther {
     grade_id: number,
     remark: string,
-    benefits: [],
+    benefits: string[],
 }
 
 export interface IInitialState {
